@@ -1,0 +1,19 @@
+{
+  "name": "wedding-invitation",
+  "version": "0.0.1",
+  "description": "Flynn and Amie's wedding invitation",
+  "main": "src/index.tsx",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/flynnpark/wedding-invitation.git"
+  },
+  "author": "Flynn <wphestiraid@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flynnpark/wedding-invitation/issues"
+  },
+  "homepage": "https://github.com/flynnpark/wedding-invitation#readme"
+}
