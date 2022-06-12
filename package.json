@@ -4,7 +4,8 @@
   "description": "Flynn and Amie's wedding invitation",
   "main": "src/index.tsx",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "https",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/flynnpark/wedding-invitation/issues"
   },
-  "homepage": "https://github.com/flynnpark/wedding-invitation#readme"
+  "homepage": "https://github.com/flynnpark/wedding-invitation#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
+    "husky": "^8.0.1"
+  }
 }
