@@ -1,4 +1,15 @@
 import type { GatsbyConfig } from 'gatsby';
+import fs from 'fs';
+import path from 'path';
+
+type RootDirConfig = {
+  [key: string]: string;
+};
+const rootDirsConfig: RootDirConfig = {};
+const srcDirs = fs.readdirSync(path.resolve(__dirname, 'src'));
+srcDirs.forEach((srcDir) => {
+  rootDirsConfig[srcDir] = path.resolve(__dirname, 'src', srcDir);
+});
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -9,7 +20,13 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: ['gatsby-plugin-postcss'],
+  plugins: [
+    'gatsby-plugin-postcss',
+    {
+      resolve: 'gatsby-plugin-root-import',
+      options: rootDirsConfig,
+    },
+  ],
 };
 
 export default config;
