@@ -1,10 +1,19 @@
-import * as React from 'react';
+import React from 'react';
+import Root from 'components/Root';
+import Section from 'components/Section';
 
 function IndexPage() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <Root>
+      <Section>Page 1</Section>
+      <Section>Page 2</Section>
+      <Section>Page 3</Section>
+      <Section>Page 4</Section>
+      <Section>Page 5</Section>
+      <Section>Page 6</Section>
+      <Section>Page 7</Section>
+      <Section>Page 8</Section>
+    </Root>
   );
 }
 
