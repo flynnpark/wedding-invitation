@@ -1,11 +1,16 @@
 import React from 'react';
+import classnames from 'utils/classnames';
+
 interface SectionProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-function Section({ children }: SectionProps) {
+function Section({ children, className }: SectionProps) {
   return (
-    <div className="h-full flex justify-center items-center">{children}</div>
+    <div className={classnames('w-full flex flex-col', className || '')}>
+      {children}
+    </div>
   );
 }
 

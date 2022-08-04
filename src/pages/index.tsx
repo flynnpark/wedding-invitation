@@ -1,11 +1,12 @@
 import React from 'react';
 import Root from 'components/Root';
 import Section from 'components/Section';
+import Home from 'sections/Home';
 
 function IndexPage() {
   return (
     <Root>
-      <Section>Page 1</Section>
+      <Home />
       <Section>Page 2</Section>
       <Section>Page 3</Section>
       <Section>Page 4</Section>

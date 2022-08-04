@@ -26,6 +26,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-root-import',
       options: rootDirsConfig,
     },
+    'gatsby-plugin-styled-components',
   ],
 };
 
