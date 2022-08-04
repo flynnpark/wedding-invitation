@@ -6,7 +6,10 @@ const foldersUnderSrc = fs
   .map((dirent) => dirent.name);
 
 module.exports = {
-  extends: 'next/core-web-vitals',
+  globals: {
+    __PATH_PREFIX__: true,
+  },
+  extends: 'react-app',
   plugins: ['simple-import-sort'],
   rules: {
     'simple-import-sort/imports': [
