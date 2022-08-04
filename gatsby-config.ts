@@ -27,6 +27,12 @@ const config: GatsbyConfig = {
       options: rootDirsConfig,
     },
     'gatsby-plugin-styled-components',
+    {
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {
+        trackingIds: ['G-YP2VXLWL37'],
+      },
+    },
   ],
 };
 
