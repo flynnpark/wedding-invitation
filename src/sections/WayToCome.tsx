@@ -2,16 +2,14 @@ import React from 'react';
 
 import Section from 'components/Section';
 
-function Home() {
+function WayToCome() {
   return (
     <Section>
       <div className="my-8 flex items-center justify-center flex-col">
-        <h1>박인호 · 박아름</h1>
-        <p>2022. 10. 15. 13:00</p>
-        <p>문경 관광호텔 무궁화홀</p>
+        <h1>오시는 길</h1>
       </div>
     </Section>
   );
 }
 
-export default Home;
+export default WayToCome;
