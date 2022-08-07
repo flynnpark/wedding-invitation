@@ -10,7 +10,7 @@ module.exports = {
     __PATH_PREFIX__: true,
   },
   extends: 'react-app',
-  plugins: ['simple-import-sort'],
+  plugins: ['simple-import-sort', 'unused-imports'],
   rules: {
     'simple-import-sort/imports': [
       'error',
@@ -22,5 +22,6 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'unused-imports/no-unused-imports': 'error',
   },
 };
