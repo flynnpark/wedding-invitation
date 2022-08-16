@@ -1,10 +1,11 @@
-import type { GatsbyConfig } from 'gatsby';
 import fs from 'fs';
+import type { GatsbyConfig } from 'gatsby';
 import path from 'path';
 
 type RootDirConfig = {
   [key: string]: string;
 };
+
 const rootDirsConfig: RootDirConfig = {};
 const srcDirs = fs.readdirSync(path.resolve(__dirname, 'src'));
 srcDirs.forEach((srcDir) => {
