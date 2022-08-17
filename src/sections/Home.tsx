@@ -6,7 +6,7 @@ import main from 'images/main.png';
 function Home() {
   return (
     <Section>
-      <div className="block items-center justify-center max-w-xl mx-auto w-full relative mt-16">
+      <div className="block items-center justify-center max-w-xl mx-auto w-full relative mt-10">
         <div className="absolute left-1/2 top-16 md:top-32 text-center -translate-x-1/2 w-full">
           <h1 className="text-base text-white underline underline-offset-2 decoration-1 shadow-black drop-shadow-[0_3px_3px_rgba(0,0,0,8)]">
             Save the date for the wedding
