@@ -11,6 +11,10 @@ import WayToCome from 'sections/WayToCome';
 function IndexPage() {
   return (
     <Root>
+      {/* <Script
+        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.GATSBY_NCP_ID}`}
+        strategy="idle"
+      /> */}
       <Home />
       <Greeting />
       <WayToCome />
@@ -27,10 +31,6 @@ export function Head() {
   return (
     <>
       <title>Flynn and Amie's wedding invitation!</title>
-      <script
-        type="text/javascript"
-        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=b4x0m503v8"
-      ></script>
     </>
   );
 }
