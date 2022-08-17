@@ -14,8 +14,8 @@ srcDirs.forEach((srcDir) => {
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `wedding-invitation`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: `Flynn & Amie's Wedding`,
+    siteUrl: `https://flynn-n-amie.netlify.app`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
