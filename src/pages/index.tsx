@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Root from 'components/Root';
 import Contacts from 'sections/Contacts';
@@ -9,6 +9,10 @@ import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
 
 function IndexPage() {
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
+
   return (
     <Root>
       {/* <Script
@@ -31,6 +35,7 @@ export function Head() {
   return (
     <>
       <title>Flynn and Amie's wedding invitation!</title>
+      <meta name="theme-color" content="#fafaf9"></meta>
     </>
   );
 }
