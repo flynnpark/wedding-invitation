@@ -22,3 +22,15 @@ function IndexPage() {
 }
 
 export default IndexPage;
+
+export function Head() {
+  return (
+    <>
+      <title>Flynn and Amie's wedding invitation!</title>
+      <script
+        type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=b4x0m503v8"
+      ></script>
+    </>
+  );
+}
