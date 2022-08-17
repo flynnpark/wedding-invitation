@@ -10,15 +10,18 @@ import WayToCome from 'sections/WayToCome';
 
 function IndexPage() {
   useEffect(() => {
-    window.scrollTo(0, 1);
+    const listener = function () {
+      window.scrollTo(0, 1);
+    };
+    window.addEventListener('load', listener);
+
+    return () => {
+      window.removeEventListener('load', listener);
+    };
   }, []);
 
   return (
     <Root>
-      {/* <Script
-        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.GATSBY_NCP_ID}`}
-        strategy="idle"
-      /> */}
       <Home />
       <Greeting />
       <WayToCome />

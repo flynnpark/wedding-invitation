@@ -34,6 +34,12 @@ const config: GatsbyConfig = {
         trackingIds: ['G-YP2VXLWL37'],
       },
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: `src/images/wedding_rings.png`,
+      },
+    },
   ],
 };
 
