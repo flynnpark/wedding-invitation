@@ -112,34 +112,62 @@ function WayToCome() {
             />
           </a>
         </div>
-        <div>
-          <h1>버스</h1>
-          <ul>
-            <li>
-              동서울 터미널
-              <ul>
-                <li>문경읍 오전 6시 20분 ~ 오후 6시 30분, 배차간격 30분</li>
-              </ul>
-            </li>
-            <li>
-              대구북구 터미널:
-              <ul>
-                <li>문경읍 오전 6시 30분 ~ 오후 6시 30분, 배차간격 15분</li>
-              </ul>
-            </li>
-            <li>
-              대전시외버스터미널:
-              <ul>
-                <li>점촌 오전 6시 27분 ~ 오후 5시 40분, 배차간격 30분</li>
-              </ul>
-            </li>
-            <li>
-              점촌 → 문경:
-              <ul>
-                <li>시내버스 100번 & 200번, 배차간격 20 ~ 30분</li>
-              </ul>
-            </li>
-          </ul>
+        <div className="px-8 space-y-4">
+          <div>
+            <h1 className="text-lg font-bold mt-10">버스</h1>
+            <ul>
+              <li className="mt-2">
+                <span className="text-stone-400 font-semibold">
+                  동서울 터미널
+                </span>
+                <ul>
+                  <li className="pl-2 mt-2 text-sm">
+                    문경읍 오전 6시 20분 ~ 오후 6시 30분
+                    <span className="text-gray-400">(배차간격 30분)</span>
+                  </li>
+                </ul>
+              </li>
+              <li className="mt-2">
+                <span className="text-stone-400 font-semibold">
+                  대구북구 터미널
+                </span>
+                <ul>
+                  <li className="pl-2 mt-2 text-sm">
+                    문경읍 오전 6시 30분 ~ 오후 6시 30분
+                    <span className="text-gray-400">(배차간격 15분)</span>
+                  </li>
+                </ul>
+              </li>
+              <li className="mt-2">
+                <span className="text-stone-400 font-semibold">
+                  대전시외버스터미널
+                </span>
+                <ul>
+                  <li className="pl-2 mt-2 text-sm">
+                    점촌 오전 6시 27분 ~ 오후 5시 40분
+                    <span className="text-gray-400">(배차간격 30분)</span>
+                  </li>
+                </ul>
+              </li>
+              <li className="mt-2">
+                <span className="text-stone-400 font-semibold">
+                  점촌 → 문경
+                </span>
+                <ul>
+                  <li className="pl-2 mt-2 text-sm">
+                    시내버스 100번 & 200번
+                    <span className="text-gray-400">(배차간격 20 ~ 30분)</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h1 className="text-lg font-bold mb-2">대절 버스(서울)</h1>
+            <p className="text-sm text-stone-400 font-semibold">
+              신랑, 신부에게 연락주세요.
+            </p>
+          </div>
         </div>
       </div>
     </Section>
