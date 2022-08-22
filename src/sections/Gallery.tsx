@@ -1,6 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import React from 'react';
-import ReactImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
+import { FluidObject } from 'gatsby-image';
+import React, { useCallback, useState } from 'react';
+import ImageViewer from 'react-simple-image-viewer';
 
 import Section from 'components/Section';
 
@@ -9,12 +10,8 @@ interface ImageData {
     edges: {
       node: {
         childImageSharp: {
-          fluid: {
-            src: string;
-          };
-          fixed: {
-            src: string;
-          };
+          fluid: FluidObject;
+          fixed: FluidObject;
         };
       };
     }[];
@@ -28,7 +25,7 @@ function Gallery() {
         edges {
           node {
             childImageSharp {
-              fluid(maxWidth: 1920) {
+              fluid(maxWidth: 1280) {
                 ...GatsbyImageSharpFluid
               }
               fixed(width: 200) {
@@ -40,33 +37,47 @@ function Gallery() {
       }
     }
   `);
+  const thumbnailImages = data.allFile.edges.map(
+    ({ node }) => node.childImageSharp.fixed.src
+  );
+  const originalImages = data.allFile.edges.map(
+    ({ node }) => node.childImageSharp.fluid.src
+  );
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
 
-  console.log(data);
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
 
-  const images: ReactImageGalleryItem[] = data.allFile.edges.map(({ node }) => {
-    const { fluid, fixed } = node.childImageSharp;
-    return {
-      original: fluid.src,
-      thumbnail: fixed.src,
-      thumbnailClass: 'w-28 h-28 overflow-hidden active:',
-    };
-  });
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
 
   return (
     <Section>
-      <div className="my-8 py-20 mx-auto w-full bg-stone-100">
-        <div className="mx-8">
-          <ReactImageGallery
-            items={images}
-            lazyLoad={true}
-            renderThumbInner={(item) => (
-              <img
-                className="object-cover w-full h-full"
-                src={item.thumbnail}
-                alt={item.thumbnailAlt}
-              />
-            )}
-          />
+      <div className="my-8 py-20 mx-auto w-full bg-stone-100 max-w-xl">
+        <div className="mx-4 md:mx-8 grid grid-cols-3 md:grid-cols-4 gap-2 ">
+          {thumbnailImages.map((src, index) => (
+            <img
+              src={src}
+              alt={src}
+              key={index}
+              onClick={() => openImageViewer(index)}
+              className="w-full aspect-square cursor-pointer object-cover"
+            />
+          ))}
+          {isViewerOpen ? (
+            <ImageViewer
+              src={originalImages}
+              currentIndex={currentImage}
+              disableScroll={false}
+              closeOnClickOutside={true}
+              onClose={closeImageViewer}
+            />
+          ) : null}
         </div>
       </div>
     </Section>
