@@ -40,6 +40,15 @@ const config: GatsbyConfig = {
         icon: `src/images/wedding_rings.png`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
   ],
 };
 

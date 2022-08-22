@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Root from 'components/Root';
 import Contacts from 'sections/Contacts';
-import Gallary from 'sections/Gallary';
+import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
 import GuestBook from 'sections/GuestBook';
 import Home from 'sections/Home';
@@ -25,7 +25,7 @@ function IndexPage() {
       <Home />
       <Greeting />
       <WayToCome />
-      <Gallary />
+      <Gallery />
       <GuestBook />
       <Contacts />
     </Root>

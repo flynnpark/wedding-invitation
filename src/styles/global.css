@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~react-image-gallery/styles/css/image-gallery.css';
 @import url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Web/76eb9ebf/stylesheet/NotoSerif-Web.css);
 
 body {
   margin: 0;
   overflow-y: hidden;
   font-family: 'Noto Serif KR', serif;
+}
+
+/*
+ * Image Gallery
+ */
+
+.image-gallery-thumbnails {
+  overflow: hidden;
+  padding: 0.25rem 0;
+  margin-top: 1rem;
 }
