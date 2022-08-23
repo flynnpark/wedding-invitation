@@ -21,7 +21,7 @@ function Home() {
           alt="메인 이미지"
           className="-z-10"
         />
-        <div className="mx-4 my-14">
+        <div className="mx-4 mb-14 mt-12">
           <h1 className="text-center text-xl">2022. 10. 15. SAT PM 1:00</h1>
           <h2 className="text-center text-xl">문경관광호텔 무궁화홀</h2>
         </div>

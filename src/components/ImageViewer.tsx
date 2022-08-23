@@ -21,7 +21,7 @@ interface IProps {
 }
 
 const navigationStyle =
-  'h-[80%] text-white cursor-pointer absolute text-6xl leading-[3.75em] font-bold flex items-center md:opacity-30 opacity-40 px-4 select-none hover:opacity-100';
+  'h-[80%] text-white cursor-pointer absolute text-6xl leading-[3.75em] font-bold flex items-center md:opacity-30 opacity-40 px-4 select-none md:hover:opacity-100';
 const buttonStyle = 'transition-opacity z-20';
 
 const ImageViewer = ({
