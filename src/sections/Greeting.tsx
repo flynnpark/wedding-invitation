@@ -25,13 +25,13 @@ function Greeting() {
           fatherName="박용환"
           motherName="송미애"
           prefix="아들"
-          mainName="박인호"
+          mainName="인호"
         />
         <HostInfoTag
           fatherName="박상현"
           motherName="천연심"
           prefix="딸"
-          mainName="박아름"
+          mainName="아름"
         />
       </div>
       <div className="space-y-2 mt-12">
