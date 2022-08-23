@@ -25,7 +25,7 @@ function Gallery() {
         edges {
           node {
             childImageSharp {
-              gatsbyImageData(width: 640)
+              gatsbyImageData
             }
             name
           }

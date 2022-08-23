@@ -1,7 +1,7 @@
+import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Section from 'components/Section';
-import main from 'images/main.png';
 
 function Home() {
   return (
@@ -16,7 +16,11 @@ function Home() {
           </span>
         </div>
         <div className="absolute left-4 right-4 top-4 bottom-0 content-[''] block border-[1px] border-gray-200"></div>
-        <img src={main} alt="메인 이미지" />
+        <StaticImage
+          src="../images/main.png"
+          alt="메인 이미지"
+          className="-z-10"
+        />
         <div className="mx-4 my-14">
           <h1 className="text-center text-xl">2022. 10. 15. SAT PM 1:00</h1>
           <h2 className="text-center text-xl">문경관광호텔 무궁화홀</h2>

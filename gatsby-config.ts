@@ -48,7 +48,15 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-plugin-image',
-    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        defaults: {
+          quality: 90,
+          breakpoints: [640, 1280],
+        },
+      },
+    },
     'gatsby-transformer-sharp',
   ],
 };

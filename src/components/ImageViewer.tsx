@@ -21,8 +21,8 @@ interface IProps {
 }
 
 const navigationStyle =
-  'h-[4/5] text-white cursor-pointer absolute text-6xl leading-[3.75em] font-bold flex items-center opacity-20 px-4 select-none hover:opacity-100';
-const buttonTransition = 'transition-opacity';
+  'h-[80%] text-white cursor-pointer absolute text-6xl leading-[3.75em] font-bold flex items-center md:opacity-30 opacity-40 px-4 select-none hover:opacity-100';
+const buttonStyle = 'transition-opacity z-20';
 
 const ImageViewer = ({
   images,
@@ -120,7 +120,7 @@ const ImageViewer = ({
       <span
         className={classnames(
           'react-simple-image-viewer__close text-white absolute top-4 right-4 text-4xl font-bold opacity-20 cursor-pointer hover:opacity-100',
-          buttonTransition
+          buttonStyle
         )}
         onClick={() => onClose?.()}
       >
@@ -132,7 +132,7 @@ const ImageViewer = ({
           className={classnames(
             'react-simple-image-viewer__previous left-0',
             navigationStyle,
-            buttonTransition
+            buttonStyle
           )}
           onClick={() => changeImage(-1)}
         >
@@ -145,7 +145,7 @@ const ImageViewer = ({
           className={classnames(
             'react-simple-image-viewer__next right-0',
             navigationStyle,
-            buttonTransition
+            buttonStyle
           )}
           onClick={() => changeImage(1)}
         >
