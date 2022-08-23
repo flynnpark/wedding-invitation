@@ -1,50 +1,43 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
+import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React, { useCallback, useState } from 'react';
-import ImageViewer from 'react-simple-image-viewer';
 
+import ImageViewer from 'components/ImageViewer';
 import Section from 'components/Section';
 
-interface ImageData {
+interface QueryResult {
   allFile: {
     edges: {
       node: {
         childImageSharp: {
-          fluid: FluidObject;
-          fixed: FluidObject;
+          gatsbyImageData: IGatsbyImageData;
         };
+        name: string;
       };
     }[];
   };
 }
 
 function Gallery() {
-  const data: ImageData = useStaticQuery(graphql`
+  const data: QueryResult = useStaticQuery(graphql`
     {
       allFile(filter: { relativeDirectory: { eq: "gallery" } }) {
         edges {
           node {
             childImageSharp {
-              fluid(maxWidth: 1280) {
-                ...GatsbyImageSharpFluid
-              }
-              fixed(width: 200) {
-                ...GatsbyImageSharpFixed
-              }
+              gatsbyImageData(width: 640)
             }
+            name
           }
         }
       }
     }
   `);
-  const thumbnailImages = data.allFile.edges.map(
-    ({ node }) => node.childImageSharp.fixed.src
-  );
-  const originalImages = data.allFile.edges.map(
-    ({ node }) => node.childImageSharp.fluid.src
-  );
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
+
+  console.log(data);
+
+  const [isViewerOpen, setIsViewerOpen] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<number>(0);
 
   const openImageViewer = useCallback((index: number) => {
     setCurrentImage(index);
@@ -60,18 +53,26 @@ function Gallery() {
     <Section>
       <div className="my-8 py-20 mx-auto w-full bg-stone-100 max-w-xl">
         <div className="mx-4 md:mx-8 grid grid-cols-3 md:grid-cols-4 gap-2 ">
-          {thumbnailImages.map((src, index) => (
-            <img
-              src={src}
-              alt={src}
-              key={index}
-              onClick={() => openImageViewer(index)}
-              className="w-full aspect-square cursor-pointer object-cover"
-            />
-          ))}
+          {data.allFile.edges.map(
+            ({ node: { childImageSharp, name } }, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => openImageViewer(index)}
+                  className="cursor-pointer"
+                >
+                  <GatsbyImage
+                    image={childImageSharp.gatsbyImageData}
+                    alt={name}
+                    className="w-full aspect-square cursor-pointer object-cover"
+                  />
+                </button>
+              );
+            }
+          )}
           {isViewerOpen ? (
             <ImageViewer
-              src={originalImages}
+              images={data.allFile.edges.map((edge) => edge.node)}
               currentIndex={currentImage}
               disableScroll={false}
               closeOnClickOutside={true}

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '~react-image-gallery/styles/css/image-gallery.css';
 @import url(https://cdn.rawgit.com/kattergil/NotoSerifKR-Web/76eb9ebf/stylesheet/NotoSerif-Web.css);
 
 body {
