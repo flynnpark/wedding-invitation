@@ -10,7 +10,8 @@ interface QueryResult {
     edges: {
       node: {
         childImageSharp: {
-          gatsbyImageData: IGatsbyImageData;
+          originalImage: IGatsbyImageData;
+          smallImage: IGatsbyImageData;
         };
         name: string;
       };
@@ -25,7 +26,8 @@ function Gallery() {
         edges {
           node {
             childImageSharp {
-              gatsbyImageData
+              originalImage: gatsbyImageData(width: 1920, quality: 80)
+              smallImage: gatsbyImageData(width: 100, height: 100, quality: 90)
             }
             name
           }
@@ -54,7 +56,16 @@ function Gallery() {
       <div className="my-8 py-20 mx-auto w-full bg-stone-100 max-w-xl">
         <div className="mx-4 md:mx-8 grid grid-cols-3 md:grid-cols-4 gap-2 ">
           {data.allFile.edges.map(
-            ({ node: { childImageSharp, name } }, index) => {
+            (
+              {
+                node: {
+                  childImageSharp: { smallImage },
+                  name,
+                },
+              },
+              index
+            ) => {
+              console.log(smallImage);
               return (
                 <button
                   key={index}
@@ -62,7 +73,7 @@ function Gallery() {
                   className="cursor-pointer"
                 >
                   <GatsbyImage
-                    image={childImageSharp.gatsbyImageData}
+                    image={smallImage}
                     alt={name}
                     className="w-full aspect-square cursor-pointer object-cover"
                   />

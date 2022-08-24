@@ -6,7 +6,8 @@ import classnames from 'utils/classnames';
 interface IProps {
   images: {
     childImageSharp: {
-      gatsbyImageData: IGatsbyImageData;
+      originalImage: IGatsbyImageData;
+      smallImage: IGatsbyImageData;
     };
     name: string;
   }[];
@@ -159,8 +160,10 @@ const ImageViewer = ({
       >
         <div className="react-simple-image-viewer__slide h-full flex items-center justify-center select-none">
           <GatsbyImage
-            image={images[currentIndex].childImageSharp.gatsbyImageData}
+            className="max-w-full max-h-full"
+            image={images[currentIndex].childImageSharp.originalImage}
             alt={images[currentIndex].name}
+            objectFit="contain"
           />
         </div>
       </div>
