@@ -4,7 +4,6 @@ import Root from 'components/Root';
 import Contacts from 'sections/Contacts';
 import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
-import GuestBook from 'sections/GuestBook';
 import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
 
@@ -24,9 +23,9 @@ function IndexPage() {
     <Root>
       <Home />
       <Greeting />
-      <WayToCome />
       <Gallery />
-      <GuestBook />
+      <WayToCome />
+      {/* <GuestBook /> */}
       <Contacts />
     </Root>
   );

@@ -9,14 +9,13 @@ function Contacts() {
     <Section>
       <div>
         <div>
-          <h1 className="text-lg text-center">마음 전하실 곳</h1>
-          <div className="flex flex-row">
+          <h1 className="text-2xl text-center">마음 전하실 곳</h1>
+          <div className="flex flex-row mt-12">
             <MainNameCard modifier="신랑" name="박인호" />
             <MainNameCard modifier="신부" name="박아름" />
           </div>
         </div>
         <div>
-          <h1 className="text-lg text-center">혼주에게 연락하기</h1>
           <div className="flex flex-row">
             <div className="flex-col w-full">
               <h1 className="text-center">신랑측 혼주</h1>

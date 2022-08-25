@@ -32,7 +32,7 @@ function WayToCome() {
   }, [status]);
 
   return (
-    <Section>
+    <Section className="bg-stone-100 py-16">
       <div className="max-w-xl mx-auto w-full">
         <div className="text-center space-y-3">
           <svg

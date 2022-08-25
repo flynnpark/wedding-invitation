@@ -113,7 +113,7 @@ const ImageViewer = ({
   return (
     <div
       id="ImageViewer"
-      className="react-simple-image-viewer__modal flex items-center fixed md:py-16 py-0 left-0 top-0 w-full h-full bg-black border box-border"
+      className="react-simple-image-viewer__modal flex items-center fixed md:py-16 py-0 left-0 top-0 w-full h-full bg-black box-border"
       onKeyDown={handleKeyDown}
       onClick={handleClick}
       style={backgroundStyle}

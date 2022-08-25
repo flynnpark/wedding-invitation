@@ -27,7 +27,7 @@ function Gallery() {
           node {
             childImageSharp {
               originalImage: gatsbyImageData(width: 1920, quality: 80)
-              smallImage: gatsbyImageData(width: 100, height: 100, quality: 90)
+              smallImage: gatsbyImageData(width: 130, height: 100, quality: 90)
             }
             name
           }
@@ -35,8 +35,6 @@ function Gallery() {
       }
     }
   `);
-
-  console.log(data);
 
   const [isViewerOpen, setIsViewerOpen] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<number>(0);
@@ -52,9 +50,9 @@ function Gallery() {
   };
 
   return (
-    <Section>
-      <div className="my-8 py-20 mx-auto w-full bg-stone-100 max-w-xl">
-        <div className="mx-4 md:mx-8 grid grid-cols-3 md:grid-cols-4 gap-2 ">
+    <Section className="my-8 py-20 w-full">
+      <div className="max-w-2xl mx-auto">
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-2 mx-2 md:mx-0">
           {data.allFile.edges.map(
             (
               {
