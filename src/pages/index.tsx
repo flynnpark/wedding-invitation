@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import Root from 'components/Root';
 import Contacts from 'sections/Contacts';
+import Copyright from 'sections/Copyright';
 import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
 import Home from 'sections/Home';
@@ -27,6 +28,7 @@ function IndexPage() {
       <WayToCome />
       {/* <GuestBook /> */}
       <Contacts />
+      <Copyright />
     </Root>
   );
 }

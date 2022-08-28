@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TossSVG() {
+function Toss() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -17,4 +17,4 @@ function TossSVG() {
   );
 }
 
-export default TossSVG;
+export default Toss;
