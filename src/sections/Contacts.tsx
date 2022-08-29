@@ -12,8 +12,20 @@ function Contacts() {
         <div>
           <h1 className="text-3xl text-center">마음 전하실 곳</h1>
           <div className="flex flex-row mt-20">
-            <MainNameCard modifier="신랑" name="박인호" />
-            <MainNameCard modifier="신부" name="박아름" />
+            <MainNameCard
+              modifier="신랑"
+              name="박인호"
+              kakaoUrl="https://open.kakao.com/o/ssJepsye"
+              kakaoPayUrl="https://qr.kakaopay.com/Ej72yoJRT"
+              tossUrl="https://toss.me/flynnpark"
+            />
+            <MainNameCard
+              modifier="신부"
+              name="박아름"
+              kakaoUrl=""
+              kakaoPayUrl=""
+              tossUrl=""
+            />
           </div>
         </div>
         <div className="flex flex-row">
