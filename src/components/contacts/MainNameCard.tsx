@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Messenger from 'components/icons/Messenger';
 import Money from 'components/icons/Money';
 import KakaoPay from '../icons/KakaoPay';
 import Toss from '../icons/Toss';
+import AccountModal, { AccountInfo } from './AccountModal';
 import PayButton from './PayButton';
 
 interface MainNameCardProps {
@@ -12,6 +13,7 @@ interface MainNameCardProps {
   kakaoUrl: string;
   kakaoPayUrl: string;
   tossUrl: string;
+  accountInfo: AccountInfo;
 }
 
 function MainNameCard({
@@ -20,9 +22,20 @@ function MainNameCard({
   kakaoUrl,
   kakaoPayUrl,
   tossUrl,
+  accountInfo,
 }: MainNameCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleModelOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
   return (
     <div className="flex flex-col w-full justify-center items-center">
+      <AccountModal
+        isOpen={isModalOpen}
+        handleClose={handleModalClose}
+        {...accountInfo}
+      />
       <h1 className="text-xl">
         <span>{modifier}</span> <span className="font-bold">{name}</span>
       </h1>
@@ -36,7 +49,10 @@ function MainNameCard({
           </PayButton>
         </div>
         <div className="flex flex-col space-y-2 items-start">
-          <button className="p-2 bg-stone-200 rounded-full">
+          <button
+            className="p-2 bg-stone-200 rounded-full"
+            onClick={handleModelOpen}
+          >
             <Money />
           </button>
           <PayButton url={tossUrl}>

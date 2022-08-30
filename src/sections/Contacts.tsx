@@ -18,6 +18,12 @@ function Contacts() {
               kakaoUrl="https://open.kakao.com/o/ssJepsye"
               kakaoPayUrl="https://qr.kakaopay.com/Ej72yoJRT"
               tossUrl="https://toss.me/flynnpark"
+              accountInfo={{
+                title: '신랑',
+                bank: '토스뱅크',
+                account: '1000-0036-7988',
+                name: '박인호',
+              }}
             />
             <MainNameCard
               modifier="신부"
@@ -25,6 +31,12 @@ function Contacts() {
               kakaoUrl=""
               kakaoPayUrl=""
               tossUrl=""
+              accountInfo={{
+                title: '신부',
+                bank: '카카오뱅크',
+                account: '3333-03-2537563',
+                name: '박아름',
+              }}
             />
           </div>
         </div>
@@ -32,13 +44,31 @@ function Contacts() {
           <div className="flex-col w-full">
             <HostTitle modifier="신랑" />
             <div className="mt-8 space-y-6">
-              <HostNameCard father="박용환" mother="송미애" />
+              <HostNameCard
+                father="박용환"
+                mother="송미애"
+                accountInfo={{
+                  title: '신랑측 아버지',
+                  bank: '농축협',
+                  account: '745107-52-052848',
+                  name: '박용환',
+                }}
+              />
             </div>
           </div>
           <div className="flex-col w-full">
             <HostTitle modifier="신부" />
             <div className="mt-8 space-y-6">
-              <HostNameCard father="박상현" mother="천연심" />
+              <HostNameCard
+                father="박상현"
+                mother="천연심"
+                accountInfo={{
+                  title: '신부측 어머니',
+                  bank: '카카오뱅크',
+                  account: '3333-23-4078901',
+                  name: '천연심',
+                }}
+              />
             </div>
           </div>
         </div>
