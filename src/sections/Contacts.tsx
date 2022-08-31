@@ -47,7 +47,7 @@ function Contacts() {
               <HostNameCard
                 father="박용환"
                 mother="송미애"
-                phone="01050920194"
+                phone="1050920194"
                 accountInfo={{
                   title: '신랑측 아버지',
                   bank: '농축협',

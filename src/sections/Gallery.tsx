@@ -62,22 +62,19 @@ function Gallery() {
                 },
               },
               index
-            ) => {
-              console.log(smallImage);
-              return (
-                <button
-                  key={index}
-                  onClick={() => openImageViewer(index)}
-                  className="cursor-pointer"
-                >
-                  <GatsbyImage
-                    image={smallImage}
-                    alt={name}
-                    className="w-full aspect-square cursor-pointer object-cover"
-                  />
-                </button>
-              );
-            }
+            ) => (
+              <button
+                key={index}
+                onClick={() => openImageViewer(index)}
+                className="cursor-pointer"
+              >
+                <GatsbyImage
+                  image={smallImage}
+                  alt={name}
+                  className="w-full aspect-square cursor-pointer object-cover"
+                />
+              </button>
+            )
           )}
           {isViewerOpen ? (
             <ImageViewer
