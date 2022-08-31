@@ -44,7 +44,7 @@ function Gallery() {
 
   const openImageViewer = useCallback(
     (index: number) => {
-      window.gtag('event', 'click_gallery', {
+      window.gtag?.('event', 'click_gallery', {
         image: data.allFile.edges[index].node.name,
       });
       setCurrentImage(index);
@@ -81,6 +81,7 @@ function Gallery() {
                   image={smallImage}
                   alt={name}
                   className="w-full aspect-square cursor-pointer object-cover"
+                  loading="eager"
                 />
               </button>
             )

@@ -27,7 +27,7 @@ function MainNameCard({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
-    window.gtag('event', 'click_account', { target: name });
+    window.gtag?.('event', 'click_account', { target: name });
     setIsModalOpen(true);
   };
   const handleModalClose = () => setIsModalOpen(false);
@@ -48,7 +48,7 @@ function MainNameCard({
             className="p-2 bg-stone-200 rounded-full"
             href={kakaoUrl}
             onClick={() =>
-              window.gtag('event', 'click_kakaotalk', { target: name })
+              window.gtag?.('event', 'click_kakaotalk', { target: name })
             }
           >
             <Messenger />
@@ -56,7 +56,7 @@ function MainNameCard({
           <PayButton
             url={kakaoPayUrl}
             onClick={() =>
-              window.gtag('event', 'click_kakaopay', { target: name })
+              window.gtag?.('event', 'click_kakaopay', { target: name })
             }
           >
             <KakaoPay />
@@ -71,7 +71,9 @@ function MainNameCard({
           </button>
           <PayButton
             url={tossUrl}
-            onClick={() => window.gtag('event', 'click_toss', { target: name })}
+            onClick={() =>
+              window.gtag?.('event', 'click_toss', { target: name })
+            }
           >
             <Toss />
           </PayButton>

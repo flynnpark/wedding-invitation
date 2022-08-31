@@ -52,8 +52,9 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-sharp',
       options: {
         defaults: {
-          quality: 90,
+          quality: 80,
           breakpoints: [640, 1280],
+          placeholder: 'blurred',
         },
       },
     },

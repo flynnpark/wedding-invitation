@@ -164,6 +164,7 @@ const ImageViewer = ({
             image={images[currentIndex].childImageSharp.originalImage}
             alt={images[currentIndex].name}
             objectFit="contain"
+            loading="eager"
           />
         </div>
       </div>

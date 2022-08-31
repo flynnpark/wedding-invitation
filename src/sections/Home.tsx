@@ -18,7 +18,7 @@ function Home() {
             title="Save the date for the wedding"
             target="_blank"
             rel="noreferrer"
-            onClick={() => window.gtag('event', 'add_to_calendar')}
+            onClick={() => window.gtag?.('event', 'add_to_calendar')}
           >
             <h1 className="text-base text-white underline underline-offset-2 decoration-1 shadow-black drop-shadow-[0_3px_3px_rgba(0,0,0,8)]">
               Save the date for the wedding
@@ -54,7 +54,7 @@ function Home() {
           <button
             className="absolute right-6 bottom-2 text-white bg-white/[.4] rounded-full p-1"
             onClick={() => {
-              window.gtag('event', 'change_main');
+              window.gtag?.('event', 'change_main');
               setPrimary(!primary);
             }}
           >
