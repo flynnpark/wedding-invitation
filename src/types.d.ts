@@ -4,6 +4,7 @@ declare module '*.png';
 declare module '*.svg';
 
 interface Window {
+  gtag: (command: string, ...commandParameters: any) => void;
   naver: {
     maps: {
       // latlng class

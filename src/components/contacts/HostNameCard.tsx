@@ -19,7 +19,10 @@ function HostNameCard({
 }: HostNameCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleModelOpen = () => setIsModalOpen(true);
+  const handleModalOpen = () => {
+    window.gtag('event', 'click_account', { target: father });
+    setIsModalOpen(true);
+  };
   const handleModalClose = () => setIsModalOpen(false);
 
   return (
@@ -38,12 +41,18 @@ function HostNameCard({
         </h1>
       </div>
       <div className="grid grid-cols-2 gap-1 mt-4">
-        <a className="p-2 bg-stone-200 rounded-full" href={`tel:+82${phone}`}>
+        <a
+          className="p-2 bg-stone-200 rounded-full"
+          href={`tel:+82${phone}`}
+          onClick={() =>
+            window.gtag('event', 'click_phone', { target: father })
+          }
+        >
           <Phone />
         </a>
         <button
           className="p-2 bg-stone-200 rounded-full"
-          onClick={handleModelOpen}
+          onClick={handleModalOpen}
         >
           <Money />
         </button>

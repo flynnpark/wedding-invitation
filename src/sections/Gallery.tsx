@@ -39,10 +39,16 @@ function Gallery() {
   const [isViewerOpen, setIsViewerOpen] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<number>(0);
 
-  const openImageViewer = useCallback((index: number) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
+  const openImageViewer = useCallback(
+    (index: number) => {
+      window.gtag('event', 'click_gallery', {
+        image: data.allFile.edges[index].node.name,
+      });
+      setCurrentImage(index);
+      setIsViewerOpen(true);
+    },
+    [data.allFile.edges]
+  );
 
   const closeImageViewer = () => {
     setCurrentImage(0);

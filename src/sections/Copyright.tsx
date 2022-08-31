@@ -14,6 +14,7 @@ function Copyright() {
           href="https://github.com/flynnpark"
           target="_blank"
           rel="noreferrer"
+          onClick={() => window.gtag('event', 'click_github')}
         >
           <Github />
         </a>

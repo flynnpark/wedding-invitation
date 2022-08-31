@@ -26,7 +26,10 @@ function MainNameCard({
 }: MainNameCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleModelOpen = () => setIsModalOpen(true);
+  const handleModalOpen = () => {
+    window.gtag('event', 'click_account', { target: name });
+    setIsModalOpen(true);
+  };
   const handleModalClose = () => setIsModalOpen(false);
 
   return (
@@ -41,21 +44,35 @@ function MainNameCard({
       </h1>
       <div className="grid grid-cols-2 gap-2 mt-4">
         <div className="flex flex-col space-y-2 items-end">
-          <a className="p-2 bg-stone-200 rounded-full" href={kakaoUrl}>
+          <a
+            className="p-2 bg-stone-200 rounded-full"
+            href={kakaoUrl}
+            onClick={() =>
+              window.gtag('event', 'click_kakaotalk', { target: name })
+            }
+          >
             <Messenger />
           </a>
-          <PayButton url={kakaoPayUrl}>
+          <PayButton
+            url={kakaoPayUrl}
+            onClick={() =>
+              window.gtag('event', 'click_kakaopay', { target: name })
+            }
+          >
             <KakaoPay />
           </PayButton>
         </div>
         <div className="flex flex-col space-y-2 items-start">
           <button
             className="p-2 bg-stone-200 rounded-full"
-            onClick={handleModelOpen}
+            onClick={handleModalOpen}
           >
             <Money />
           </button>
-          <PayButton url={tossUrl}>
+          <PayButton
+            url={tossUrl}
+            onClick={() => window.gtag('event', 'click_toss', { target: name })}
+          >
             <Toss />
           </PayButton>
         </div>

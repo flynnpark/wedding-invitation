@@ -34,7 +34,6 @@ const StyledContainer = styled(ToastContainer)`
 `;
 
 function IndexPage() {
-  console.log('render');
   useEffect(() => {
     const listener = function () {
       window.scrollTo(0, 1);

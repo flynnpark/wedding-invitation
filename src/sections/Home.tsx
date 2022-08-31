@@ -45,7 +45,10 @@ function Home() {
           )}
           <button
             className="absolute right-6 bottom-2 text-white bg-white/[.4] rounded-full p-1"
-            onClick={() => setPrimary(!primary)}
+            onClick={() => {
+              window.gtag('event', 'change_main');
+              setPrimary(!primary);
+            }}
           >
             <Swap />
           </button>
