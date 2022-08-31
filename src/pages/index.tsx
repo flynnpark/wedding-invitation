@@ -80,7 +80,7 @@ export function Head() {
       />
       <meta
         property="og:description"
-        content="공유기능 | 열심히 코드를 공부합시다."
+        content="2022년 10월 15일 오후 1시 문경관광호텔"
       />
     </>
   );
