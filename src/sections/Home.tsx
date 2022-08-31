@@ -12,10 +12,13 @@ function Home() {
   return (
     <Section>
       <div className="block items-center justify-center max-w-xl mx-auto w-full relative lg:mt-10">
-        <div className="absolute left-1/2 top-16 md:top-32 text-center -translate-x-1/2 w-full">
+        <div className="absolute left-1/2 top-16 md:top-32 text-center -translate-x-1/2 w-full z-10">
           <a
             href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20221015T040000Z%2F20221015T060000Z&location=%EB%AC%B8%EA%B2%BD%EA%B4%80%EA%B4%91%ED%98%B8%ED%85%94&text=%EC%9D%B8%ED%98%B8%20%26%20%EC%95%84%EB%A6%84%20%EA%B2%B0%ED%98%BC%EC%8B%9D"
             title="Save the date for the wedding"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => window.gtag('event', 'add_to_calendar')}
           >
             <h1 className="text-base text-white underline underline-offset-2 decoration-1 shadow-black drop-shadow-[0_3px_3px_rgba(0,0,0,8)]">
               Save the date for the wedding
