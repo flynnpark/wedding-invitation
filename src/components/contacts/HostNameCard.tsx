@@ -7,10 +7,16 @@ import AccountModal, { AccountInfo } from './AccountModal';
 interface HostNameCardProps {
   father: string;
   mother: string;
+  phone: string;
   accountInfo: AccountInfo;
 }
 
-function HostNameCard({ father, mother, accountInfo }: HostNameCardProps) {
+function HostNameCard({
+  father,
+  mother,
+  phone,
+  accountInfo,
+}: HostNameCardProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModelOpen = () => setIsModalOpen(true);
@@ -32,9 +38,9 @@ function HostNameCard({ father, mother, accountInfo }: HostNameCardProps) {
         </h1>
       </div>
       <div className="grid grid-cols-2 gap-1 mt-4">
-        <button className="p-2 bg-stone-200 rounded-full">
+        <a className="p-2 bg-stone-200 rounded-full" href={`tel:+82${phone}`}>
           <Phone />
-        </button>
+        </a>
         <button
           className="p-2 bg-stone-200 rounded-full"
           onClick={handleModelOpen}

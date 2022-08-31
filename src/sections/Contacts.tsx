@@ -29,8 +29,8 @@ function Contacts() {
               modifier="신부"
               name="박아름"
               kakaoUrl=""
-              kakaoPayUrl=""
-              tossUrl=""
+              kakaoPayUrl="https://qr.kakaopay.com/Ej8fAZQcN"
+              tossUrl="https://toss.me/amiepark"
               accountInfo={{
                 title: '신부',
                 bank: '카카오뱅크',
@@ -47,6 +47,7 @@ function Contacts() {
               <HostNameCard
                 father="박용환"
                 mother="송미애"
+                phone="01050920194"
                 accountInfo={{
                   title: '신랑측 아버지',
                   bank: '농축협',
@@ -62,6 +63,7 @@ function Contacts() {
               <HostNameCard
                 father="박상현"
                 mother="천연심"
+                phone=""
                 accountInfo={{
                   title: '신부측 어머니',
                   bank: '카카오뱅크',
