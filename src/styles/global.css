@@ -14,13 +14,3 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-
-/*
- * Image Gallery
- */
-
-.image-gallery-thumbnails {
-  overflow: hidden;
-  padding: 0.25rem 0;
-  margin-top: 1rem;
-}
