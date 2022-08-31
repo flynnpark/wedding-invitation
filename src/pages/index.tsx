@@ -10,6 +10,7 @@ import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
 import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
+import Main from '../images/main1.png';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,6 +34,7 @@ const StyledContainer = styled(ToastContainer)`
 `;
 
 function IndexPage() {
+  console.log('render');
   useEffect(() => {
     const listener = function () {
       window.scrollTo(0, 1);
@@ -67,8 +69,16 @@ export default IndexPage;
 export function Head() {
   return (
     <>
-      <title>Flynn and Amie's wedding invitation!</title>
+      <title>인호 & 아름, 결혼합니다!</title>
       <meta name="theme-color" content="#fafaf9"></meta>
+      <meta property="og:url" content="https://flynn-n-amie.netlify.com/" />
+      <meta property="og:title" content="인호 & 아름, 결혼합니다!" />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content={Main} />
+      <meta
+        property="og:description"
+        content="공유기능 | 열심히 코드를 공부합시다."
+      />
     </>
   );
 }
