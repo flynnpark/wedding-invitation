@@ -50,7 +50,7 @@ function Contacts() {
                 phone="1050920194"
                 accountInfo={{
                   title: '신랑측 아버지',
-                  bank: '농축협',
+                  bank: '농협',
                   account: '745107-52-052848',
                   name: '박용환',
                 }}

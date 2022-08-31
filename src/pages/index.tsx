@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Slide, ToastContainer } from 'react-toastify';
+import styled from 'styled-components';
 
 import Root from 'components/Root';
 import Contacts from 'sections/Contacts';
@@ -7,6 +9,27 @@ import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
 import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+const StyledContainer = styled(ToastContainer)`
+  // https://styled-components.com/docs/faqs#how-can-i-override-styles-with-higher-specificity
+  &&&.Toastify__toast-container {
+  }
+  .Toastify__toast {
+    border-radius: 0.75rem;
+    min-height: auto;
+  }
+  .Toastify__toast-body {
+    padding: 0;
+    margin: 0.25rem 0;
+  }
+  .Toastify__progress-bar {
+  }
+  button[aria-label='close'] {
+    display: none;
+  }
+`;
 
 function IndexPage() {
   useEffect(() => {
@@ -29,6 +52,7 @@ function IndexPage() {
       {/* <GuestBook /> */}
       <Contacts />
       <Copyright />
+      <StyledContainer transition={Slide} />
     </Root>
   );
 }

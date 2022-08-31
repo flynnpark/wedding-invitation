@@ -1,5 +1,7 @@
 import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
 
 export interface AccountInfo {
   title: string;
@@ -21,6 +23,17 @@ function AccountModal({
   account,
   name,
 }: AccountModalProps) {
+  const notify = () =>
+    toast.info('계좌번호가 복사되었어요!', {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   return (
     <Modal
       isOpen={isOpen}
@@ -37,9 +50,11 @@ function AccountModal({
         <h2>예금주: {name}</h2>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <button className="flex bg-stone-300  py-2 rounded-md justify-center text-sm">
-          복사하기
-        </button>
+        <CopyToClipboard text={`${bank} ${account}`} onCopy={notify}>
+          <button className="flex bg-stone-300  py-2 rounded-md justify-center text-sm">
+            복사하기
+          </button>
+        </CopyToClipboard>
         <button
           className="flex bg-stone-600  py-2 rounded-md justify-center text-sm text-white"
           onClick={handleClose}
