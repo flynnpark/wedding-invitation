@@ -14,7 +14,7 @@ function Home() {
       <div className="block items-center justify-center max-w-xl mx-auto w-full relative lg:mt-10">
         <div className="absolute left-1/2 top-16 md:top-32 text-center -translate-x-1/2 w-full z-10">
           <a
-            href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20221015T040000Z%2F20221015T060000Z&location=%EB%AC%B8%EA%B2%BD%EA%B4%80%EA%B4%91%ED%98%B8%ED%85%94&text=%EC%9D%B8%ED%98%B8%20%26%20%EC%95%84%EB%A6%84%20%EA%B2%B0%ED%98%BC%EC%8B%9D"
+            href="https://calendar.google.com/calendar/u/0/r/eventedit?dates=20221015T040000Z/20221015T060000Z&location=%EB%AC%B8%EA%B2%BD%EA%B4%80%EA%B4%91%ED%98%B8%ED%85%94,%20%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%20%EA%B2%BD%EC%83%81%EB%B6%81%EB%8F%84%20%EB%AC%B8%EA%B2%BD%EC%8B%9C%20%EB%AC%B8%EA%B2%BD%EC%9D%8D%20%EC%83%88%EC%9E%AC2%EA%B8%B8%2032-11&text=%EC%9D%B8%ED%98%B8+%26+%EC%95%84%EB%A6%84+%EA%B2%B0%ED%98%BC%EC%8B%9D"
             title="Save the date for the wedding"
             target="_blank"
             rel="noreferrer"
