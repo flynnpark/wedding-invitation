@@ -6,8 +6,13 @@
 
 body {
   margin: 0;
-  overflow-y: hidden;
   font-family: 'Noto Serif KR', serif;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /*

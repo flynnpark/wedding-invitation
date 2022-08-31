@@ -52,7 +52,6 @@ function IndexPage() {
         <WayToCome />
         {/* <GuestBook /> */}
         <Contacts />
-
         <Copyright />
       </Root>
       <StyledContainer transition={Slide} />
