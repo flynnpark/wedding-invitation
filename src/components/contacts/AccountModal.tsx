@@ -25,7 +25,7 @@ function AccountModal({
     <Modal
       isOpen={isOpen}
       className="bg-white rounded-2xl flex flex-col p-4 w-80 text-center"
-      overlayClassName="absolute top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex"
+      overlayClassName="absolute top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full"
     >
       <div>
         <h2>{title}</h2>
