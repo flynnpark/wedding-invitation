@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Modal from 'react-modal';
 import { Slide, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -58,6 +59,8 @@ function IndexPage() {
     </>
   );
 }
+
+Modal.setAppElement('#___gatsby');
 
 export default IndexPage;
 

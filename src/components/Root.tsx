@@ -6,7 +6,7 @@ interface RootProps {
 
 function Root({ children }: RootProps) {
   return (
-    <div className="overflow-auto w-full text-gray-800 space-y-32">
+    <div className="overflow-auto w-full h-full min-h-screen relative text-gray-800 space-y-32">
       {children}
     </div>
   );
