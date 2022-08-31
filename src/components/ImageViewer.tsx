@@ -42,9 +42,10 @@ const ImageViewer = ({
     (delta: number) => {
       let nextIndex = (currentIndex + delta) % images.length;
       if (nextIndex < 0) nextIndex = images.length - 1;
+      window.gtag('event', 'change_image', { image: images[nextIndex].name });
       setCurrentIndex(nextIndex);
     },
-    [currentIndex, images.length]
+    [currentIndex, images]
   );
 
   const handleClick = useCallback(
