@@ -44,16 +44,19 @@ function IndexPage() {
   }, []);
 
   return (
-    <Root>
-      <Home />
-      <Greeting />
-      <Gallery />
-      <WayToCome />
-      {/* <GuestBook /> */}
-      <Contacts />
-      <Copyright />
+    <>
+      <Root>
+        <Home />
+        <Greeting />
+        <Gallery />
+        <WayToCome />
+        {/* <GuestBook /> */}
+        <Contacts />
+
+        <Copyright />
+      </Root>
       <StyledContainer transition={Slide} />
-    </Root>
+    </>
   );
 }
 
