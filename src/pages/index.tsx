@@ -74,7 +74,10 @@ export function Head() {
       <meta property="og:url" content="https://flynn-n-amie.netlify.com/" />
       <meta property="og:title" content="인호 & 아름, 결혼합니다!" />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={Main} />
+      <meta
+        property="og:image"
+        content={`https://flynn-n-amie.netlify.com${Main}`}
+      />
       <meta
         property="og:description"
         content="공유기능 | 열심히 코드를 공부합시다."
