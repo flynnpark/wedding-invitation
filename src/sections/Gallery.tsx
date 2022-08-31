@@ -22,7 +22,10 @@ interface QueryResult {
 function Gallery() {
   const data: QueryResult = useStaticQuery(graphql`
     {
-      allFile(filter: { relativeDirectory: { eq: "gallery" } }) {
+      allFile(
+        filter: { relativeDirectory: { eq: "gallery" } }
+        sort: { order: ASC, fields: [name] }
+      ) {
         edges {
           node {
             childImageSharp {
