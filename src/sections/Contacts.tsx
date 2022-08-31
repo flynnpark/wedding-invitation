@@ -28,7 +28,7 @@ function Contacts() {
             <MainNameCard
               modifier="신부"
               name="박아름"
-              kakaoUrl=""
+              kakaoUrl="https://open.kakao.com/o/s9noaVye"
               kakaoPayUrl="https://qr.kakaopay.com/Ej8fAZQcN"
               tossUrl="https://toss.me/amiepark"
               accountInfo={{
