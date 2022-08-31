@@ -10,7 +10,7 @@ import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
 import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
-import Main from '../images/main1.png';
+import Main from '../images/main1.jpg';
 
 import 'react-toastify/dist/ReactToastify.css';
 

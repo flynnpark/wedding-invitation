@@ -32,13 +32,13 @@ function Home() {
         <div className="relative">
           {primary ? (
             <StaticImage
-              src="../images/main1.png"
+              src="../images/main1.jpg"
               alt="메인 이미지"
               className="-z-10"
             />
           ) : (
             <StaticImage
-              src="../images/main2.png"
+              src="../images/main2.jpg"
               alt="메인 이미지"
               className="-z-10"
             />
