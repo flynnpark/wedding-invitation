@@ -8,6 +8,7 @@ import Contacts from 'sections/Contacts';
 import Copyright from 'sections/Copyright';
 import Gallery from 'sections/Gallery';
 import Greeting from 'sections/Greeting';
+import GuestBook from 'sections/GuestBook';
 import Home from 'sections/Home';
 import WayToCome from 'sections/WayToCome';
 import Main from '../images/main1.jpg';
@@ -52,8 +53,8 @@ function IndexPage() {
         <Greeting />
         <Gallery />
         <WayToCome />
-        {/* <GuestBook /> */}
         <Contacts />
+        <GuestBook />
         <Copyright />
       </Root>
       <StyledContainer transition={Slide} />
