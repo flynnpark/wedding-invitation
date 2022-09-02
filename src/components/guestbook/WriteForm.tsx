@@ -17,7 +17,12 @@ interface WriteFormProps {
   handleClose: () => void;
 
   setIsOpen: (value: React.SetStateAction<boolean>) => void;
-  addNewPost: (id: string, name: string, content: string) => void;
+  addNewPost: (
+    id: string,
+    name: string,
+    content: string,
+    createdAt: Date
+  ) => void;
 }
 
 function WriteForm({
@@ -32,14 +37,15 @@ function WriteForm({
     window.gtag?.('event', 'write_guest_book');
 
     const { name, password, content } = data;
+    const createdAt = new Date();
     const docRef = await addDoc(collection(db, 'guestBook'), {
       name,
       password,
       content,
       isDeleted: false,
-      createdAt: new Date(),
+      createdAt,
     });
-    addNewPost(docRef.id, name, content);
+    addNewPost(docRef.id, name, content, createdAt);
     setIsOpen(false);
     toast.info('게시글이 작성되었어요!', {
       position: 'bottom-center',

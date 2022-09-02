@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 
@@ -9,6 +10,7 @@ export interface Post {
   id: string;
   name: string;
   content: string;
+  createdAt: Date;
 }
 
 function GuestBook() {
@@ -31,7 +33,13 @@ function GuestBook() {
     setPosts(
       querySnapshot.docs.map((doc) => {
         const { name, password, content, createdAt } = doc.data();
-        return { id: doc.id, name, password, content, createdAt };
+        return {
+          id: doc.id,
+          name,
+          password,
+          content,
+          createdAt: createdAt.toDate(),
+        };
       })
     );
   };
@@ -40,20 +48,26 @@ function GuestBook() {
     fetchData();
   }, []);
 
-  const addNewPost = (id: string, name: string, content: string) => {
+  const addNewPost = (
+    id: string,
+    name: string,
+    content: string,
+    createdAt: Date
+  ) => {
     setPosts([
       {
         id,
         name,
         content,
+        createdAt,
       },
       ...posts,
     ]);
   };
 
   return (
-    <Section>
-      <div className="w-full max-w-2xl mx-auto space-y-12 px-4">
+    <Section className="py-20">
+      <div className="w-full max-w-2xl mx-auto space-y-12 md:px-4">
         <h1 className="text-3xl text-center">방명록</h1>
         <WriteForm
           isOpen={isModalOpen}
@@ -62,16 +76,21 @@ function GuestBook() {
           addNewPost={addNewPost}
         />
         <div className="space-y-4">
-          <div className="overflow-x-auto flex space-x-3 h-64 py-4 pl-1 relative -left-1">
-            {posts.map(({ id, name, content }) => (
+          <div className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative ">
+            {posts.map(({ id, name, content, createdAt }) => (
               <div
                 key={id}
-                className="flex flex-col rounded-xl w-44 max-w-xl bg-stone-100 flex-none text-xs p-4 justify-between shadow-md"
+                className="flex flex-col rounded-xl w-44 max-w-xl bg-stone-100 flex-none text-xs p-4 justify-between shadow-md first:ml-2"
               >
-                <div className="overflow-hidden flex-col break-all">
+                <div className="overflow-hidden flex-col break-all text-ellipsis leading-5">
                   {content}
                 </div>
-                <h1 className="text-center">- {name} -</h1>
+                <div className="text-right">
+                  <h1>- {name}</h1>
+                  <span className="text-[.5rem] font-sans">
+                    {dayjs(createdAt).format('MM월 DD일 HH:mm')}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
