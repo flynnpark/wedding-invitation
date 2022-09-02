@@ -12,10 +12,9 @@ export interface GuestBookForm {
   content: string;
 }
 
-interface WriteFormProps {
+interface WriteFormModalProps {
   isOpen: boolean;
   handleClose: () => void;
-
   setIsOpen: (value: React.SetStateAction<boolean>) => void;
   addNewPost: (
     id: string,
@@ -25,17 +24,16 @@ interface WriteFormProps {
   ) => void;
 }
 
-function WriteForm({
+function WriteFormModal({
   isOpen,
   handleClose,
   setIsOpen,
   addNewPost,
-}: WriteFormProps) {
+}: WriteFormModalProps) {
   const { register, handleSubmit, reset } = useForm<GuestBookForm>();
 
   const onValid = async (data: GuestBookForm) => {
     window.gtag?.('event', 'write_guest_book');
-
     const { name, password, content } = data;
     const createdAt = new Date();
     const docRef = await addDoc(collection(db, 'guestBook'), {
@@ -138,4 +136,4 @@ function WriteForm({
   );
 }
 
-export default WriteForm;
+export default WriteFormModal;

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 
-import WriteForm from 'components/guestbook/WriteForm';
+import WriteFormModal from 'components/guestbook/WriteFormModal';
 import Section from 'components/Section';
 import { db } from 'utils/firebase';
 
@@ -69,7 +69,7 @@ function GuestBook() {
     <Section className="py-20">
       <div className="w-full max-w-2xl mx-auto space-y-12 md:px-4">
         <h1 className="text-3xl text-center">방명록</h1>
-        <WriteForm
+        <WriteFormModal
           isOpen={isModalOpen}
           handleClose={handleModalClose}
           setIsOpen={setIsModalOpen}
