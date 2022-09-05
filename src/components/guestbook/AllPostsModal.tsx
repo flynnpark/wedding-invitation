@@ -1,12 +1,21 @@
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { Post } from 'sections/GuestBook';
 import { db } from 'utils/firebase';
 import AllContentsPostCard from './AllContentsPostCard';
-import PostFormModal, { FormType } from './PostFormModal';
+import PostFormModal, { FormType, GuestBookPostForm } from './PostFormModal';
 
 const PostCardsContainer = styled.div`
   &::-webkit-scrollbar {
@@ -17,6 +26,10 @@ const PostCardsContainer = styled.div`
     background: #ccc;
   }
 `;
+
+interface PostWithPassword extends Post {
+  password: string;
+}
 
 interface AllPostsModalProps {
   isOpen: boolean;
@@ -30,7 +43,10 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
 
   const fetchData = async () => {
-    const dataQuery = query(collection(db, 'guestBook'), orderBy('createdAt'));
+    const dataQuery = query(
+      collection(db, 'guestBook'),
+      orderBy('createdAt', 'desc')
+    );
     const querySnapshot = await getDocs(dataQuery);
     setPosts(
       querySnapshot.docs.map((doc) => {
@@ -46,10 +62,6 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     );
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const handleOpenDeleteForm = (post: Post) => {
     window.gtag?.('event', 'open_guestbook_delete_form');
     setFormType('delete');
@@ -58,13 +70,52 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
   };
   const handleFormModalClose = () => setIsFormModalOpen(false);
 
+  const onFormValid = async (data: GuestBookPostForm) => {
+    const { id, password } = data;
+    if (!id) return false;
+
+    const document = await getDoc(doc(db, 'guestBook', id));
+    if (!document.exists()) {
+      return false;
+    }
+
+    const post = document.data() as PostWithPassword;
+    if (post.password !== password) {
+      toast.error('비밀번호가 틀렸어요.', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return false;
+    }
+
+    await deleteDoc(doc(db, 'guestBook', id));
+    toast.info('게시글이 삭제되었어요!', {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setIsFormModalOpen(false);
+    fetchData();
+    return true;
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       className="bg-white rounded-2xl flex flex-col py-4 px-2 w-80 text-center max-h-full"
-      overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full py-2"
+      overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full py-8"
       onAfterOpen={() => {
         document.body.style.overflow = 'hidden';
+        fetchData();
       }}
       onRequestClose={() => {
         document.body.removeAttribute('style');
@@ -96,7 +147,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
         type={formType}
         isOpen={isFormModalOpen}
         handleClose={handleFormModalClose}
-        onFormValid={() => {}}
+        onFormValid={onFormValid}
         post={targetPost}
       />
     </Modal>

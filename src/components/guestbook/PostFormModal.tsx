@@ -29,7 +29,7 @@ interface WriteFormModalProps {
   type?: FormType;
   isOpen: boolean;
   handleClose: () => void;
-  onFormValid: (data: GuestBookPostForm) => Promise<void> | void;
+  onFormValid: (data: GuestBookPostForm) => Promise<boolean> | boolean;
   post?: Post;
 }
 
@@ -43,8 +43,10 @@ function PostFormModal({
   const { register, handleSubmit, reset } = useForm<GuestBookPostForm>();
 
   const onValid = async (data: GuestBookPostForm) => {
-    await onFormValid(data);
-    reset();
+    const isSuccess = await onFormValid(data);
+    if (isSuccess) {
+      reset();
+    }
   };
 
   const getSubmitButtonText = () => {
@@ -54,6 +56,11 @@ function PostFormModal({
       return '삭제하기';
     }
     return '작성하기';
+  };
+
+  const handleModalClose = () => {
+    reset();
+    handleClose();
   };
 
   return (
@@ -129,6 +136,12 @@ function PostFormModal({
               value={post?.content}
             />
           </div>
+          <input
+            type="hidden"
+            {...register('id', {
+              value: post?.id,
+            })}
+          />
         </div>
         <div className="flex flex-row space-x-2 justify-center mt-4">
           <button
@@ -139,7 +152,7 @@ function PostFormModal({
           </button>
           <button
             className="flex bg-stone-300  py-2 rounded-md justify-center text-sm w-24"
-            onClick={handleClose}
+            onClick={handleModalClose}
           >
             닫기
           </button>

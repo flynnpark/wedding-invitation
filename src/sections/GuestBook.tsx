@@ -55,7 +55,7 @@ function GuestBook() {
   const fetchData = async () => {
     const dataQuery = query(
       collection(db, 'guestBook'),
-      orderBy('createdAt'),
+      orderBy('createdAt', 'desc'),
       limit(10)
     );
     const querySnapshot = await getDocs(dataQuery);
@@ -99,6 +99,7 @@ function GuestBook() {
       draggable: true,
       progress: undefined,
     });
+    return true;
   };
 
   const addNewPost = (
