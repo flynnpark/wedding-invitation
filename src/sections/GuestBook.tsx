@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 
+import AllPostsModal from 'components/guestbook/AllPostsModal';
 import WriteFormModal from 'components/guestbook/WriteFormModal';
 import Section from 'components/Section';
 import { db } from 'utils/firebase';
@@ -14,20 +15,27 @@ export interface Post {
 }
 
 function GuestBook() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
+  const [isPostsModalOpen, setIsPostsModalOpen] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const handleModalOpen = () => {
+  const handleFormModalOpen = () => {
     window.gtag?.('event', 'open_guestbook_form');
-    setIsModalOpen(true);
+    setIsFormModalOpen(true);
   };
-  const handleModalClose = () => setIsModalOpen(false);
+  const handleFormModalClose = () => setIsFormModalOpen(false);
+
+  const handlePostsModalOpen = () => {
+    window.gtag?.('event', 'open_guestbook_posts');
+    setIsPostsModalOpen(true);
+  };
+  const handlePostsModalClose = () => setIsFormModalOpen(false);
 
   const fetchData = async () => {
     const dataQuery = query(
       collection(db, 'guestBook'),
       orderBy('createdAt'),
-      limit(20)
+      limit(10)
     );
     const querySnapshot = await getDocs(dataQuery);
     setPosts(
@@ -69,12 +77,6 @@ function GuestBook() {
     <Section className="py-20">
       <div className="w-full max-w-2xl mx-auto space-y-12 md:px-4">
         <h1 className="text-3xl text-center">방명록</h1>
-        <WriteFormModal
-          isOpen={isModalOpen}
-          handleClose={handleModalClose}
-          setIsOpen={setIsModalOpen}
-          addNewPost={addNewPost}
-        />
         <div className="space-y-4">
           <div className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative ">
             {posts.map(({ id, name, content, createdAt }) => (
@@ -95,16 +97,28 @@ function GuestBook() {
             ))}
           </div>
           <div className="flex flex-row justify-end space-x-2 text-sm font-sans">
-            <button className="p-1">전체 보기</button>
+            <button className="p-1" onClick={handlePostsModalOpen}>
+              전체 보기
+            </button>
             <button
               className="p-1 font-bold flex-row"
-              onClick={handleModalOpen}
+              onClick={handleFormModalOpen}
             >
               글 남기기
             </button>
           </div>
         </div>
       </div>
+      <WriteFormModal
+        isOpen={isFormModalOpen}
+        handleClose={handleFormModalClose}
+        setIsOpen={setIsFormModalOpen}
+        addNewPost={addNewPost}
+      />
+      <AllPostsModal
+        isOpen={isPostsModalOpen}
+        handleClose={handlePostsModalClose}
+      />
     </Section>
   );
 }
