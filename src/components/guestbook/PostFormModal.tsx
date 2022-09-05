@@ -1,9 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
+import styled from 'styled-components';
 
 import { Post } from 'sections/GuestBook';
 import classnames from 'utils/classnames';
+
+const TextArea = styled.textarea`
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+    background: #ccc;
+  }
+`;
 
 export interface GuestBookPostForm {
   id?: string;
@@ -73,7 +84,7 @@ function PostFormModal({
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
-                type === 'delete' ? 'bg-stone-400' : 'bg-stone-200'
+                type === 'delete' ? 'bg-zinc-400' : 'bg-stone-200'
               )}
               value={post?.name}
             />
@@ -104,16 +115,16 @@ function PostFormModal({
             >
               내용
             </label>
-            <textarea
+            <TextArea
               id="content"
-              rows={5}
+              rows={10}
               {...register('content', {
                 required: true,
                 disabled: type === 'delete',
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
-                type === 'delete' ? 'bg-stone-400' : 'bg-stone-200'
+                type === 'delete' ? 'bg-zinc-400' : 'bg-stone-200'
               )}
               value={post?.content}
             />
