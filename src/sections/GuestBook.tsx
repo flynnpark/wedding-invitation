@@ -1,9 +1,19 @@
 import dayjs from 'dayjs';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import AllPostsModal from 'components/guestbook/AllPostsModal';
-import WriteFormModal from 'components/guestbook/WriteFormModal';
+import PostFormModal, {
+  GuestBookForm,
+} from 'components/guestbook/PostFormModal';
 import Section from 'components/Section';
 import { db } from 'utils/firebase';
 
@@ -55,6 +65,30 @@ function GuestBook() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const onFormValid = async (data: GuestBookForm) => {
+    const { name, password, content } = data;
+    window.gtag?.('event', 'write_guest_book');
+    const createdAt = new Date();
+    const docRef = await addDoc(collection(db, 'guestBook'), {
+      name,
+      password,
+      content,
+      isDeleted: false,
+      createdAt,
+    });
+    addNewPost(docRef.id, name, content, createdAt);
+    setIsFormModalOpen(false);
+    toast.info('게시글이 작성되었어요!', {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const addNewPost = (
     id: string,
@@ -109,11 +143,10 @@ function GuestBook() {
           </div>
         </div>
       </div>
-      <WriteFormModal
+      <PostFormModal
         isOpen={isFormModalOpen}
         handleClose={handleFormModalClose}
-        setIsOpen={setIsFormModalOpen}
-        addNewPost={addNewPost}
+        onFormValid={onFormValid}
       />
       <AllPostsModal
         isOpen={isPostsModalOpen}

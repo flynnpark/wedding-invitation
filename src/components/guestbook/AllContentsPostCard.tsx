@@ -5,17 +5,20 @@ import { Post } from 'sections/GuestBook';
 
 interface AllContentsPostCardProps {
   post: Post;
+  handleOpenForm: (post: Post) => void;
 }
 
 function AllContentsPostCard({
-  post: { content, name, createdAt },
+  post,
+  handleOpenForm,
 }: AllContentsPostCardProps) {
+  const { content, name, createdAt } = post;
   return (
     <div className="text-left text-sm break-all leading-5">
       <div className="flex flex-row justify-between items-center mt-8">
         <h1 className="font-bold font-sans">{name}</h1>
         <div>
-          <button>
+          <button onClick={() => handleOpenForm(post)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

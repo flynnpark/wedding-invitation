@@ -1,10 +1,9 @@
-import { addDoc, collection } from 'firebase/firestore';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
-import { toast } from 'react-toastify';
 
-import { db } from 'utils/firebase';
+import { Post } from 'sections/GuestBook';
+import classnames from 'utils/classnames';
 
 export interface GuestBookForm {
   name: string;
@@ -12,49 +11,37 @@ export interface GuestBookForm {
   content: string;
 }
 
+export type FormType = 'new' | 'edit' | 'delete';
+
 interface WriteFormModalProps {
+  type: FormType;
   isOpen: boolean;
   handleClose: () => void;
-  setIsOpen: (value: React.SetStateAction<boolean>) => void;
-  addNewPost: (
-    id: string,
-    name: string,
-    content: string,
-    createdAt: Date
-  ) => void;
+  onFormValid: (data: GuestBookForm) => Promise<void> | void;
+  post?: Post;
 }
 
-function WriteFormModal({
+function PostFormModal({
+  type = 'new',
   isOpen,
   handleClose,
-  setIsOpen,
-  addNewPost,
+  onFormValid,
+  post,
 }: WriteFormModalProps) {
   const { register, handleSubmit, reset } = useForm<GuestBookForm>();
 
   const onValid = async (data: GuestBookForm) => {
-    window.gtag?.('event', 'write_guest_book');
-    const { name, password, content } = data;
-    const createdAt = new Date();
-    const docRef = await addDoc(collection(db, 'guestBook'), {
-      name,
-      password,
-      content,
-      isDeleted: false,
-      createdAt,
-    });
-    addNewPost(docRef.id, name, content, createdAt);
-    setIsOpen(false);
-    toast.info('게시글이 작성되었어요!', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    await onFormValid(data);
     reset();
+  };
+
+  const getSubmitButtonText = () => {
+    if (type === 'edit') {
+      return '수정하기';
+    } else if (type === 'delete') {
+      return '삭제하기';
+    }
+    return '작성하기';
   };
 
   return (
@@ -79,8 +66,15 @@ function WriteFormModal({
             <input
               type="text"
               id="name"
-              {...register('name', { required: true })}
-              className="bg-stone-200 rounded-xl px-2 py-1"
+              {...register('name', {
+                required: true,
+                disabled: type === 'delete',
+              })}
+              className={classnames(
+                'rounded-xl px-2 py-1',
+                type === 'delete' ? 'bg-stone-400' : 'bg-stone-200'
+              )}
+              value={post?.name}
             />
           </div>
           <div className="w-full flex flex-col">
@@ -99,7 +93,7 @@ function WriteFormModal({
               type="password"
               id="password"
               {...register('password', { required: true })}
-              className="bg-stone-200 rounded-xl px-2 py-1"
+              className={'rounded-xl px-2 py-1 bg-stone-200'}
             />
           </div>
           <div className="flex flex-col space-y-2">
@@ -112,8 +106,15 @@ function WriteFormModal({
             <textarea
               id="content"
               rows={5}
-              {...register('content', { required: true })}
-              className="bg-stone-200 rounded-xl px-2 py-1"
+              {...register('content', {
+                required: true,
+                disabled: type === 'delete',
+              })}
+              className={classnames(
+                'rounded-xl px-2 py-1',
+                type === 'delete' ? 'bg-stone-400' : 'bg-stone-200'
+              )}
+              value={post?.content}
             />
           </div>
         </div>
@@ -122,7 +123,7 @@ function WriteFormModal({
             type="submit"
             className="flex bg-stone-600  py-2 rounded-md justify-center text-sm w-24 text-white"
           >
-            작성하기
+            {getSubmitButtonText()}
           </button>
           <button
             className="flex bg-stone-300  py-2 rounded-md justify-center text-sm w-24"
@@ -136,4 +137,4 @@ function WriteFormModal({
   );
 }
 
-export default WriteFormModal;
+export default PostFormModal;
