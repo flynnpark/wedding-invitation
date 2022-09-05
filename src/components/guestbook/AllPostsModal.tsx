@@ -1,11 +1,22 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import styled from 'styled-components';
 
 import { Post } from 'sections/GuestBook';
 import { db } from 'utils/firebase';
 import AllContentsPostCard from './AllContentsPostCard';
 import PostFormModal, { FormType } from './PostFormModal';
+
+const PostCardsContainer = styled.div`
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+    background: #ccc;
+  }
+`;
 
 interface AllPostsModalProps {
   isOpen: boolean;
@@ -50,7 +61,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
   return (
     <Modal
       isOpen={isOpen}
-      className="bg-white rounded-2xl flex flex-col p-4 w-80 text-center max-h-full"
+      className="bg-white rounded-2xl flex flex-col py-4 px-2 w-80 text-center max-h-full"
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full py-2"
       onAfterOpen={() => {
         document.body.style.overflow = 'hidden';
@@ -64,7 +75,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
         <hr className="my-4" />
         <div className=""></div>
       </div>
-      <div className="flex flex-col overflow-y-auto divide-y space-y-8">
+      <PostCardsContainer className="flex flex-col overflow-y-auto divide-y space-y-8 scroll px-2">
         {posts.map((post) => (
           <AllContentsPostCard
             key={post.id}
@@ -72,7 +83,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
             handleOpenForm={handleOpenDeleteForm}
           />
         ))}
-      </div>
+      </PostCardsContainer>
       <div className="flex flex-row justify-center mt-4">
         <button
           className="flex bg-stone-300  py-2 rounded-md justify-center text-sm w-24"

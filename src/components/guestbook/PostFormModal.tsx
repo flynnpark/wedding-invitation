@@ -5,7 +5,8 @@ import Modal from 'react-modal';
 import { Post } from 'sections/GuestBook';
 import classnames from 'utils/classnames';
 
-export interface GuestBookForm {
+export interface GuestBookPostForm {
+  id?: string;
   name: string;
   password: string;
   content: string;
@@ -14,10 +15,10 @@ export interface GuestBookForm {
 export type FormType = 'new' | 'edit' | 'delete';
 
 interface WriteFormModalProps {
-  type: FormType;
+  type?: FormType;
   isOpen: boolean;
   handleClose: () => void;
-  onFormValid: (data: GuestBookForm) => Promise<void> | void;
+  onFormValid: (data: GuestBookPostForm) => Promise<void> | void;
   post?: Post;
 }
 
@@ -28,9 +29,9 @@ function PostFormModal({
   onFormValid,
   post,
 }: WriteFormModalProps) {
-  const { register, handleSubmit, reset } = useForm<GuestBookForm>();
+  const { register, handleSubmit, reset } = useForm<GuestBookPostForm>();
 
-  const onValid = async (data: GuestBookForm) => {
+  const onValid = async (data: GuestBookPostForm) => {
     await onFormValid(data);
     reset();
   };
