@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -91,11 +93,21 @@ function GuestBook() {
     const docRef = await addDoc(collection(db, 'guestBook'), {
       name,
       password: hashedPassword,
-      content,
+      content: content.replaceAll('\n', '\\n'),
       isDeleted: false,
       createdAt,
     });
-    addNewPost(docRef.id, name, content, createdAt);
+    const newDocument = await getDoc(doc(db, 'guestBook', docRef.id));
+    const newPost = newDocument.data() as Post;
+    setPosts([
+      {
+        id: newPost.id,
+        content: newPost.content,
+        name: newPost.name,
+        createdAt: newPost.createdAt,
+      },
+      ...posts,
+    ]);
     setIsFormModalOpen(false);
     window.gtag?.('event', 'write_guest_book', { name });
     toast.info('게시글이 작성되었어요!', {
@@ -108,23 +120,6 @@ function GuestBook() {
       progress: undefined,
     });
     return true;
-  };
-
-  const addNewPost = (
-    id: string,
-    name: string,
-    content: string,
-    createdAt: Date
-  ) => {
-    setPosts([
-      {
-        id,
-        name,
-        content,
-        createdAt,
-      },
-      ...posts,
-    ]);
   };
 
   return (

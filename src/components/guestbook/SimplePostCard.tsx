@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import { Post } from 'sections/GuestBook';
@@ -20,7 +20,12 @@ function SimplePostCard({
   return (
     <div className="flex flex-col rounded-xl w-44 max-w-xl bg-stone-100 flex-none text-xs p-4 justify-between shadow-md first:ml-2">
       <ContentContainer className="overflow-hidden flex-col break-all text-ellipsis leading-5">
-        {content}
+        {content.split('\\n').map((text) => (
+          <Fragment key={text}>
+            {text}
+            <br />
+          </Fragment>
+        ))}
       </ContentContainer>
       <div className="text-right">
         <h1>- {name}</h1>

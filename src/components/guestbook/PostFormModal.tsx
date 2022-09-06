@@ -133,7 +133,10 @@ function PostFormModal({
               rows={10}
               {...register('content', {
                 required: true,
-                value: post?.content,
+                value: post?.content.replaceAll(
+                  '\\n',
+                  String.fromCharCode(13, 10)
+                ),
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Post } from 'sections/GuestBook';
 
@@ -36,7 +36,14 @@ function AllContentsPostCard({
           </button>
         </div>
       </div>
-      <div className="mt-2">{content}</div>
+      <div className="mt-2">
+        {content.split('\\n').map((text) => (
+          <Fragment key={text}>
+            {text}
+            <br />
+          </Fragment>
+        ))}
+      </div>
       <div className="text-right">
         <span className="text-[.5rem] font-sans mt-8">
           {dayjs(createdAt).format('MM월 DD일 HH:mm')}
