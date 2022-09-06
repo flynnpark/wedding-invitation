@@ -93,28 +93,12 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     const post = document.data() as PostWithPassword;
     const isPasswordMatched = await bcrypt.compare(password, post.password);
     if (!isPasswordMatched) {
-      toast.error('비밀번호가 틀렸어요.', {
-        position: 'bottom-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('비밀번호가 틀렸어요.');
       return false;
     }
 
     await updateDoc(docRef, { name, content });
-    toast.info('게시글이 수정되었어요!', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.info('게시글이 수정되었어요!');
     setIsFormModalOpen(false);
     fetchData();
     window.gtag?.('event', 'edit_guest_book', { name: post.name });
@@ -133,28 +117,12 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     const post = document.data() as PostWithPassword;
     const isPasswordMatched = await bcrypt.compare(password, post.password);
     if (!isPasswordMatched) {
-      toast.error('비밀번호가 틀렸어요.', {
-        position: 'bottom-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('비밀번호가 틀렸어요.');
       return false;
     }
 
     await deleteDoc(doc(db, 'guestBook', id));
-    toast.info('게시글이 삭제되었어요!', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.info('게시글이 삭제되었어요!');
     setIsFormModalOpen(false);
     fetchData();
     window.gtag?.('event', 'delete_guest_book', { name: post.name });

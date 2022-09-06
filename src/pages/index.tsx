@@ -57,7 +57,15 @@ function IndexPage() {
         <GuestBook />
         <Copyright />
       </Root>
-      <StyledContainer transition={Slide} />
+      <StyledContainer
+        transition={Slide}
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+      />
     </>
   );
 }

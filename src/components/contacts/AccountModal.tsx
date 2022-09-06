@@ -23,16 +23,7 @@ function AccountModal({
   account,
   name,
 }: AccountModalProps) {
-  const notify = () =>
-    toast.info('계좌번호가 복사되었어요!', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  const notify = () => toast.info('계좌번호가 복사되었어요!');
 
   return (
     <Modal

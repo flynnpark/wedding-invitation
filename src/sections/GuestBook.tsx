@@ -112,15 +112,7 @@ function GuestBook() {
     }
     setIsFormModalOpen(false);
     window.gtag?.('event', 'write_guest_book', { name });
-    toast.info('게시글이 작성되었어요!', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.info('게시글이 작성되었어요!');
     return true;
   };
 
