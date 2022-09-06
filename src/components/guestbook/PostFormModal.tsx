@@ -43,6 +43,7 @@ function PostFormModal({
   const { register, handleSubmit, reset } = useForm<GuestBookPostForm>();
 
   const onValid = async (data: GuestBookPostForm) => {
+    console.log(data);
     const isSuccess = await onFormValid(data);
     if (isSuccess) {
       reset();
@@ -93,13 +94,13 @@ function PostFormModal({
               id="name"
               {...register('name', {
                 required: true,
-                disabled: type === 'delete',
+                value: post?.name,
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
                 type === 'delete' ? 'bg-zinc-400' : 'bg-stone-200'
               )}
-              value={post?.name}
+              readOnly={type === 'delete'}
             />
           </div>
           <div className="w-full flex flex-col">
@@ -133,13 +134,13 @@ function PostFormModal({
               rows={10}
               {...register('content', {
                 required: true,
-                disabled: type === 'delete',
+                value: post?.content,
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
                 type === 'delete' ? 'bg-zinc-400' : 'bg-stone-200'
               )}
-              value={post?.content}
+              readOnly={type === 'delete'}
             />
           </div>
           <input

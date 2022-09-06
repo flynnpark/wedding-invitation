@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import {
   addDoc,
   collection,
@@ -44,13 +45,19 @@ function GuestBook() {
     window.gtag?.('event', 'open_guestbook_form');
     setIsFormModalOpen(true);
   };
-  const handleFormModalClose = () => setIsFormModalOpen(false);
+  const handleFormModalClose = () => {
+    fetchData();
+    setIsFormModalOpen(false);
+  };
 
   const handleAllPostsModalOpen = () => {
     window.gtag?.('event', 'open_guestbook_posts');
     setIsPostsModalOpen(true);
   };
-  const handleAllPostsModalClose = () => setIsPostsModalOpen(false);
+  const handleAllPostsModalClose = () => {
+    fetchData();
+    setIsPostsModalOpen(false);
+  };
 
   const fetchData = async () => {
     const dataQuery = query(
@@ -61,11 +68,10 @@ function GuestBook() {
     const querySnapshot = await getDocs(dataQuery);
     setPosts(
       querySnapshot.docs.map((doc) => {
-        const { name, password, content, createdAt } = doc.data();
+        const { name, content, createdAt } = doc.data();
         return {
           id: doc.id,
           name,
-          password,
           content,
           createdAt: createdAt.toDate(),
         };
@@ -80,9 +86,11 @@ function GuestBook() {
   const onFormValid = async (data: GuestBookPostForm) => {
     const { name, password, content } = data;
     const createdAt = new Date();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const docRef = await addDoc(collection(db, 'guestBook'), {
       name,
-      password,
+      password: hashedPassword,
       content,
       isDeleted: false,
       createdAt,
@@ -126,8 +134,8 @@ function GuestBook() {
         <div className="space-y-4">
           {posts.length === 0 ? (
             <div className="flex flex-col w-full space-x-3 h-64 py-4 relative justify-center items-center">
-              <h1>아직 아무 글도 없어요.</h1>
-              <h2>새 글을 남겨보세요!</h2>
+              <span>아직 아무 글도 없어요.</span>
+              <span>새 글을 남겨보세요!</span>
             </div>
           ) : (
             <PostsContainer className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative">
@@ -137,7 +145,7 @@ function GuestBook() {
             </PostsContainer>
           )}
           <div className="flex flex-row justify-end space-x-2 text-sm font-sans">
-            {posts.length >= 10 && (
+            {posts.length >= 1 && (
               <button className="p-1" onClick={handleAllPostsModalOpen}>
                 전체 보기
               </button>

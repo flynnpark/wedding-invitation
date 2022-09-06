@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import {
   collection,
   deleteDoc,
@@ -64,8 +65,8 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
 
   const handleOpenDeleteForm = (post: Post) => {
     window.gtag?.('event', 'open_guestbook_delete_form');
-    setFormType('delete');
     setTargetPost(post);
+    setFormType('delete');
     setIsFormModalOpen(true);
   };
   const handleFormModalClose = () => setIsFormModalOpen(false);
@@ -80,7 +81,9 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     }
 
     const post = document.data() as PostWithPassword;
-    if (post.password !== password) {
+    console.log('123');
+    const isPasswordMatched = await bcrypt.compare(password, post.password);
+    if (!isPasswordMatched) {
       toast.error('비밀번호가 틀렸어요.', {
         position: 'bottom-center',
         autoClose: 3000,
@@ -127,15 +130,22 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
         <hr className="my-4" />
         <div className=""></div>
       </div>
-      <PostCardsContainer className="flex flex-col overflow-y-auto divide-y space-y-8 scroll px-2">
-        {posts.map((post) => (
-          <AllContentsPostCard
-            key={post.id}
-            post={post}
-            handleOpenForm={handleOpenDeleteForm}
-          />
-        ))}
-      </PostCardsContainer>
+      {posts.length === 0 ? (
+        <div className="flex flex-col scroll px-2 py-8">
+          <span>아직 아무 글도 없어요.</span>
+          <span>새 글을 남겨보세요!</span>
+        </div>
+      ) : (
+        <PostCardsContainer className="flex flex-col overflow-y-auto divide-y space-y-8 scroll px-2">
+          {posts.map((post) => (
+            <AllContentsPostCard
+              key={post.id}
+              post={post}
+              handleOpenForm={handleOpenDeleteForm}
+            />
+          ))}
+        </PostCardsContainer>
+      )}
       <div className="flex flex-row justify-center mt-4">
         <button
           className="flex bg-stone-300  py-2 rounded-md justify-center text-sm w-24"
@@ -144,13 +154,15 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
           닫기
         </button>
       </div>
-      <PostFormModal
-        type={formType}
-        isOpen={isFormModalOpen}
-        handleClose={handleFormModalClose}
-        onFormValid={onFormValid}
-        post={targetPost}
-      />
+      {targetPost && (
+        <PostFormModal
+          type={formType}
+          isOpen={isFormModalOpen}
+          handleClose={handleFormModalClose}
+          onFormValid={onFormValid}
+          post={targetPost}
+        />
+      )}
     </Modal>
   );
 }
