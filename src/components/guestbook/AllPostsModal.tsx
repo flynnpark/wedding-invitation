@@ -69,7 +69,9 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     setFormType('delete');
     setIsFormModalOpen(true);
   };
-  const handleFormModalClose = () => setIsFormModalOpen(false);
+  const handleFormModalClose = () => {
+    setIsFormModalOpen(false);
+  };
 
   const onFormValid = async (data: GuestBookPostForm) => {
     const { id, password } = data;
@@ -120,7 +122,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
         document.body.style.overflow = 'hidden';
         fetchData();
       }}
-      onRequestClose={() => {
+      onAfterClose={() => {
         document.body.removeAttribute('style');
       }}
     >

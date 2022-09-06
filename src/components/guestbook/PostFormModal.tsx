@@ -76,7 +76,7 @@ function PostFormModal({
       onAfterOpen={() => {
         document.body.style.overflow = 'hidden';
       }}
-      onRequestClose={() => {
+      onAfterClose={() => {
         document.body.removeAttribute('style');
       }}
     >
