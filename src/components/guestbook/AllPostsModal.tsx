@@ -81,7 +81,6 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     }
 
     const post = document.data() as PostWithPassword;
-    console.log('123');
     const isPasswordMatched = await bcrypt.compare(password, post.password);
     if (!isPasswordMatched) {
       toast.error('비밀번호가 틀렸어요.', {

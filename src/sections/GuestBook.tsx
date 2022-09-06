@@ -51,7 +51,7 @@ function GuestBook() {
   };
 
   const handleAllPostsModalOpen = () => {
-    window.gtag?.('event', 'open_guestbook_posts');
+    window.gtag?.('event', 'open_guestbook_all_posts');
     setIsPostsModalOpen(true);
   };
   const handleAllPostsModalClose = () => {

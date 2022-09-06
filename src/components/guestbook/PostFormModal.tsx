@@ -43,7 +43,6 @@ function PostFormModal({
   const { register, handleSubmit, reset } = useForm<GuestBookPostForm>();
 
   const onValid = async (data: GuestBookPostForm) => {
-    console.log(data);
     const isSuccess = await onFormValid(data);
     if (isSuccess) {
       reset();
