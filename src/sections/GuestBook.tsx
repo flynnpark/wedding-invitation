@@ -98,16 +98,18 @@ function GuestBook() {
       createdAt,
     });
     const newDocument = await getDoc(doc(db, 'guestBook', docRef.id));
-    const newPost = newDocument.data() as Post;
-    setPosts([
-      {
-        id: newPost.id,
-        content: newPost.content,
-        name: newPost.name,
-        createdAt: newPost.createdAt,
-      },
-      ...posts,
-    ]);
+    const newPost = newDocument.data();
+    if (newPost) {
+      setPosts([
+        {
+          id: newPost.id,
+          content: newPost.content,
+          name: newPost.name,
+          createdAt: newPost.createdAt.toDate(),
+        },
+        ...posts,
+      ]);
+    }
     setIsFormModalOpen(false);
     window.gtag?.('event', 'write_guest_book', { name });
     toast.info('게시글이 작성되었어요!', {
