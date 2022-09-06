@@ -68,6 +68,12 @@ function PostFormModal({
       isOpen={isOpen}
       className="bg-white rounded-2xl flex flex-col p-4 w-80"
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full"
+      onAfterOpen={() => {
+        document.body.style.overflow = 'hidden';
+      }}
+      onRequestClose={() => {
+        document.body.removeAttribute('style');
+      }}
     >
       <div className="text-center">
         <h2>방명록 글 작성</h2>
