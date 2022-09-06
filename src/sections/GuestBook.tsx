@@ -133,7 +133,7 @@ function GuestBook() {
         <h1 className="text-3xl text-center">방명록</h1>
         <div className="space-y-4">
           {posts.length === 0 ? (
-            <div className="flex flex-col w-full space-x-3 h-64 py-4 relative justify-center items-center">
+            <div className="flex flex-col w-full h-64 py-4 relative justify-center items-center">
               <span>아직 아무 글도 없어요.</span>
               <span>새 글을 남겨보세요!</span>
             </div>
