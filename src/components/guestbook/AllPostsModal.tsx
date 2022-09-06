@@ -7,6 +7,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
@@ -63,6 +64,12 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     );
   };
 
+  const handleOpenEditForm = (post: Post) => {
+    window.gtag?.('event', 'open_guestbook_edit_form');
+    setTargetPost(post);
+    setFormType('edit');
+    setIsFormModalOpen(true);
+  };
   const handleOpenDeleteForm = (post: Post) => {
     window.gtag?.('event', 'open_guestbook_delete_form');
     setTargetPost(post);
@@ -73,7 +80,48 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     setIsFormModalOpen(false);
   };
 
-  const onFormValid = async (data: GuestBookPostForm) => {
+  const onEditFormValid = async (data: GuestBookPostForm) => {
+    const { id, name, password, content } = data;
+    if (!id) return false;
+
+    const docRef = doc(db, 'guestBook', id);
+    const document = await getDoc(docRef);
+    if (!document.exists()) {
+      return false;
+    }
+
+    const post = document.data() as PostWithPassword;
+    const isPasswordMatched = await bcrypt.compare(password, post.password);
+    if (!isPasswordMatched) {
+      toast.error('비밀번호가 틀렸어요.', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return false;
+    }
+
+    await updateDoc(docRef, { name, content });
+    toast.info('게시글이 수정되었어요!', {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setIsFormModalOpen(false);
+    fetchData();
+    window.gtag?.('event', 'edit_guest_book', { name: post.name });
+    return true;
+  };
+
+  const onDeleteFormValid = async (data: GuestBookPostForm) => {
     const { id, password } = data;
     if (!id) return false;
 
@@ -138,7 +186,8 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
             <AllContentsPostCard
               key={post.id}
               post={post}
-              handleOpenForm={handleOpenDeleteForm}
+              handleOpenEditForm={handleOpenEditForm}
+              handleOpenDeleteForm={handleOpenDeleteForm}
             />
           ))}
         </PostCardsContainer>
@@ -156,7 +205,9 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
           type={formType}
           isOpen={isFormModalOpen}
           handleClose={handleFormModalClose}
-          onFormValid={onFormValid}
+          onFormValid={
+            formType === 'edit' ? onEditFormValid : onDeleteFormValid
+          }
           post={targetPost}
         />
       )}
