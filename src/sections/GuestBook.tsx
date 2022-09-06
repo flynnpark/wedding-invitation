@@ -46,11 +46,11 @@ function GuestBook() {
   };
   const handleFormModalClose = () => setIsFormModalOpen(false);
 
-  const handlePostsModalOpen = () => {
+  const handleAllPostsModalOpen = () => {
     window.gtag?.('event', 'open_guestbook_posts');
     setIsPostsModalOpen(true);
   };
-  const handlePostsModalClose = () => setIsPostsModalOpen(false);
+  const handleAllPostsModalClose = () => setIsPostsModalOpen(false);
 
   const fetchData = async () => {
     const dataQuery = query(
@@ -79,7 +79,6 @@ function GuestBook() {
 
   const onFormValid = async (data: GuestBookPostForm) => {
     const { name, password, content } = data;
-    window.gtag?.('event', 'write_guest_book');
     const createdAt = new Date();
     const docRef = await addDoc(collection(db, 'guestBook'), {
       name,
@@ -90,6 +89,7 @@ function GuestBook() {
     });
     addNewPost(docRef.id, name, content, createdAt);
     setIsFormModalOpen(false);
+    window.gtag?.('event', 'write_guest_book', { name });
     toast.info('게시글이 작성되었어요!', {
       position: 'bottom-center',
       autoClose: 3000,
@@ -124,15 +124,24 @@ function GuestBook() {
       <div className="w-full max-w-2xl mx-auto space-y-12 md:px-4">
         <h1 className="text-3xl text-center">방명록</h1>
         <div className="space-y-4">
-          <PostsContainer className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative ">
-            {posts.map((post) => (
-              <SimplePostCard key={post.id} post={post} />
-            ))}
-          </PostsContainer>
+          {posts.length === 0 ? (
+            <div className="flex flex-col w-full space-x-3 h-64 py-4 relative justify-center items-center">
+              <h1>아직 아무 글도 없어요.</h1>
+              <h2>새 글을 남겨보세요!</h2>
+            </div>
+          ) : (
+            <PostsContainer className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative">
+              {posts.map((post) => (
+                <SimplePostCard key={post.id} post={post} />
+              ))}
+            </PostsContainer>
+          )}
           <div className="flex flex-row justify-end space-x-2 text-sm font-sans">
-            <button className="p-1" onClick={handlePostsModalOpen}>
-              전체 보기
-            </button>
+            {posts.length >= 10 && (
+              <button className="p-1" onClick={handleAllPostsModalOpen}>
+                전체 보기
+              </button>
+            )}
             <button
               className="p-1 font-bold flex-row"
               onClick={handleFormModalOpen}
@@ -149,7 +158,7 @@ function GuestBook() {
       />
       <AllPostsModal
         isOpen={isPostsModalOpen}
-        handleClose={handlePostsModalClose}
+        handleClose={handleAllPostsModalClose}
       />
     </Section>
   );

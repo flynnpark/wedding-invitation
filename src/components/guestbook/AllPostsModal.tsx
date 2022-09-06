@@ -105,6 +105,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     });
     setIsFormModalOpen(false);
     fetchData();
+    window.gtag?.('event', 'delete_guest_book', { name: post.name });
     return true;
   };
 
