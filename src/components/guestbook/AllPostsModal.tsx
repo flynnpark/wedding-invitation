@@ -119,11 +119,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
       className="bg-white rounded-2xl flex flex-col py-4 px-2 w-80 text-center max-h-full"
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full py-8"
       onAfterOpen={() => {
-        document.body.style.overflow = 'hidden';
         fetchData();
-      }}
-      onAfterClose={() => {
-        document.body.removeAttribute('style');
       }}
     >
       <div className="text-center">
