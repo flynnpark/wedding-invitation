@@ -40,7 +40,12 @@ function PostFormModal({
   onFormValid,
   post,
 }: WriteFormModalProps) {
-  const { register, handleSubmit, reset } = useForm<GuestBookPostForm>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<GuestBookPostForm>();
 
   const onValid = async (data: GuestBookPostForm) => {
     const isSuccess = await onFormValid(data);
@@ -94,6 +99,10 @@ function PostFormModal({
               {...register('name', {
                 required: true,
                 value: post?.name,
+                minLength: {
+                  value: 2,
+                  message: '이름은 2글자 이상 작성해주세요.',
+                },
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
@@ -101,6 +110,11 @@ function PostFormModal({
               )}
               readOnly={type === 'delete'}
             />
+            {errors.name && (
+              <span className="text-xs mt-1 text-red-500">
+                {errors.name.message}
+              </span>
+            )}
           </div>
           <div className="w-full flex flex-col">
             <div>
@@ -117,9 +131,20 @@ function PostFormModal({
             <input
               type="password"
               id="password"
-              {...register('password', { required: true })}
+              {...register('password', {
+                required: true,
+                minLength: {
+                  value: 4,
+                  message: '비밀번호는 4글자 이상 작성해주세요.',
+                },
+              })}
               className={'rounded-xl px-2 py-1 bg-stone-200'}
             />
+            {errors.password && (
+              <span className="text-xs mt-1 text-red-500">
+                {errors.password.message}
+              </span>
+            )}
           </div>
           <div className="flex flex-col space-y-2">
             <label
@@ -137,6 +162,10 @@ function PostFormModal({
                   '\\n',
                   String.fromCharCode(13, 10)
                 ),
+                minLength: {
+                  value: 5,
+                  message: '내용은 5글자 이상 작성해주세요.',
+                },
               })}
               className={classnames(
                 'rounded-xl px-2 py-1',
@@ -144,6 +173,11 @@ function PostFormModal({
               )}
               readOnly={type === 'delete'}
             />
+            {errors.content && (
+              <span className="text-xs mt-1 text-red-500">
+                {errors.content.message}
+              </span>
+            )}
           </div>
           <input
             type="hidden"
