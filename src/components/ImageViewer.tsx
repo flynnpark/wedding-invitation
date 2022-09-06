@@ -42,7 +42,7 @@ const ImageViewer = ({
     (delta: number) => {
       let nextIndex = (currentIndex + delta) % images.length;
       if (nextIndex < 0) nextIndex = images.length - 1;
-      window.gtag('event', 'change_image', { image: images[nextIndex].name });
+      window.gtag?.('event', 'change_image', { image: images[nextIndex].name });
       setCurrentIndex(nextIndex);
     },
     [currentIndex, images]
@@ -114,7 +114,7 @@ const ImageViewer = ({
   return (
     <div
       id="ImageViewer"
-      className="react-simple-image-viewer__modal flex items-center fixed md:py-16 py-0 left-0 top-0 w-full h-full bg-black box-border"
+      className="react-simple-image-viewer__modal flex items-center fixed md:py-16 py-0 left-0 top-0 w-full h-full bg-black box-border z-50"
       onKeyDown={handleKeyDown}
       onClick={handleClick}
       style={backgroundStyle}
