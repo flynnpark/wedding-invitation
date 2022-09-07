@@ -1,13 +1,13 @@
 import bcrypt from 'bcryptjs';
 import {
   collection,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
   orderBy,
   query,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
@@ -16,6 +16,7 @@ import styled from 'styled-components';
 
 import { Post } from 'sections/GuestBook';
 import { db } from 'utils/firebase';
+import { trackEvent } from 'utils/gtag';
 import AllContentsPostCard from './AllContentsPostCard';
 import PostFormModal, { FormType, GuestBookPostForm } from './PostFormModal';
 
@@ -47,6 +48,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
   const fetchData = async () => {
     const dataQuery = query(
       collection(db, 'guestBook'),
+      where('isDeleted', '==', false),
       orderBy('createdAt', 'desc')
     );
     const querySnapshot = await getDocs(dataQuery);
@@ -65,13 +67,13 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
   };
 
   const handleOpenEditForm = (post: Post) => {
-    window.gtag?.('event', 'open_guestbook_edit_form');
+    trackEvent('open_guestbook_edit_form');
     setTargetPost(post);
     setFormType('edit');
     setIsFormModalOpen(true);
   };
   const handleOpenDeleteForm = (post: Post) => {
-    window.gtag?.('event', 'open_guestbook_delete_form');
+    trackEvent('open_guestbook_delete_form');
     setTargetPost(post);
     setFormType('delete');
     setIsFormModalOpen(true);
@@ -80,7 +82,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     setIsFormModalOpen(false);
   };
 
-  const onEditFormValid = async (data: GuestBookPostForm) => {
+  const onEditFormValid = async (data: GuestBookPostForm): Promise<boolean> => {
     const { id, name, password, content } = data;
     if (!id) return false;
 
@@ -101,15 +103,18 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     toast.info('게시글이 수정되었어요!');
     setIsFormModalOpen(false);
     fetchData();
-    window.gtag?.('event', 'edit_guest_book', { name: post.name });
+    trackEvent('edit_guest_book', { name: post.name });
     return true;
   };
 
-  const onDeleteFormValid = async (data: GuestBookPostForm) => {
+  const onDeleteFormValid = async (
+    data: GuestBookPostForm
+  ): Promise<boolean> => {
     const { id, password } = data;
     if (!id) return false;
 
-    const document = await getDoc(doc(db, 'guestBook', id));
+    const docRef = doc(db, 'guestBook', id);
+    const document = await getDoc(docRef);
     if (!document.exists()) {
       return false;
     }
@@ -121,11 +126,11 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
       return false;
     }
 
-    await deleteDoc(doc(db, 'guestBook', id));
+    await updateDoc(docRef, { isDeleted: true });
     toast.info('게시글이 삭제되었어요!');
     setIsFormModalOpen(false);
     fetchData();
-    window.gtag?.('event', 'delete_guest_book', { name: post.name });
+    trackEvent('delete_guest_book', { name: post.name });
     return true;
   };
 

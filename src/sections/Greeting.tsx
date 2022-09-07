@@ -2,6 +2,7 @@ import React from 'react';
 
 import HostInfoTag from 'components/greetings/HostInfoTag';
 import Section from 'components/Section';
+import { trackEvent } from 'utils/gtag';
 
 function Greeting() {
   return (
@@ -42,7 +43,7 @@ function Greeting() {
           title="Save the date for the wedding"
           target="_blank"
           rel="noreferrer"
-          onClick={() => window.gtag?.('event', 'add_to_calendar')}
+          onClick={() => trackEvent('add_to_calendar')}
           className="inline-block rounded-full bg-stone-200 px-[0.6rem] py-[0.4rem] items-center justify-center text-xs"
         >
           캘린더에 추가하기

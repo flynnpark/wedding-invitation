@@ -2,6 +2,7 @@ import React from 'react';
 
 import Github from 'components/icons/Github';
 import Section from 'components/Section';
+import { trackEvent } from 'utils/gtag';
 
 function Copyright() {
   return (
@@ -14,7 +15,7 @@ function Copyright() {
           href="https://github.com/flynnpark"
           target="_blank"
           rel="noreferrer"
-          onClick={() => window.gtag?.('event', 'click_github')}
+          onClick={() => trackEvent('click_github')}
         >
           <Github />
         </a>

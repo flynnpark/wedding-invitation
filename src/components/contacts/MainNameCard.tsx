@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Messenger from 'components/icons/Messenger';
 import Money from 'components/icons/Money';
+import { trackEvent } from 'utils/gtag';
 import KakaoPay from '../icons/KakaoPay';
 import Toss from '../icons/Toss';
 import AccountModal, { AccountInfo } from './AccountModal';
@@ -27,7 +28,7 @@ function MainNameCard({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
-    window.gtag?.('event', 'click_account', { target: name });
+    trackEvent('click_account', { target: name });
     setIsModalOpen(true);
   };
   const handleModalClose = () => setIsModalOpen(false);
@@ -47,17 +48,13 @@ function MainNameCard({
           <a
             className="p-2 bg-stone-200 rounded-full"
             href={kakaoUrl}
-            onClick={() =>
-              window.gtag?.('event', 'click_kakaotalk', { target: name })
-            }
+            onClick={() => trackEvent('click_kakaotalk', { target: name })}
           >
             <Messenger />
           </a>
           <PayButton
             url={kakaoPayUrl}
-            onClick={() =>
-              window.gtag?.('event', 'click_kakaopay', { target: name })
-            }
+            onClick={() => trackEvent('click_kakaopay', { target: name })}
           >
             <KakaoPay />
           </PayButton>
@@ -71,9 +68,7 @@ function MainNameCard({
           </button>
           <PayButton
             url={tossUrl}
-            onClick={() =>
-              window.gtag?.('event', 'click_toss', { target: name })
-            }
+            onClick={() => trackEvent('click_toss', { target: name })}
           >
             <Toss />
           </PayButton>

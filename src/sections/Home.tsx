@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import Swap from 'components/icons/Swap';
 import Section from 'components/Section';
+import { trackEvent } from 'utils/gtag';
 
 function Home() {
   const [primary, setPrimary] = useState<boolean>(
@@ -18,7 +19,7 @@ function Home() {
             title="Save the date for the wedding"
             target="_blank"
             rel="noreferrer"
-            onClick={() => window.gtag?.('event', 'add_to_calendar')}
+            onClick={() => trackEvent('add_to_calendar')}
           >
             <h1 className="text-base text-white underline underline-offset-2 decoration-1 shadow-black drop-shadow-[0_3px_3px_rgba(0,0,0,8)]">
               Save the date for the wedding
@@ -54,7 +55,7 @@ function Home() {
           <button
             className="absolute right-6 bottom-2 text-white bg-white/[.4] rounded-full p-1"
             onClick={() => {
-              window.gtag?.('event', 'change_main');
+              trackEvent('change_main');
               setPrimary(!primary);
             }}
           >

@@ -8,6 +8,7 @@ import {
   limit,
   orderBy,
   query,
+  where,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -20,6 +21,7 @@ import PostFormModal, {
 import SimplePostCard from 'components/guestbook/SimplePostCard';
 import Section from 'components/Section';
 import { db } from 'utils/firebase';
+import { trackEvent } from 'utils/gtag';
 
 const PostsContainer = styled.div`
   &::-webkit-scrollbar {
@@ -44,7 +46,7 @@ function GuestBook() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const handleFormModalOpen = () => {
-    window.gtag?.('event', 'open_guestbook_form');
+    trackEvent('open_guestbook_form');
     setIsFormModalOpen(true);
   };
   const handleFormModalClose = () => {
@@ -53,7 +55,7 @@ function GuestBook() {
   };
 
   const handleAllPostsModalOpen = () => {
-    window.gtag?.('event', 'open_guestbook_all_posts');
+    trackEvent('open_guestbook_all_posts');
     setIsPostsModalOpen(true);
   };
   const handleAllPostsModalClose = () => {
@@ -64,6 +66,7 @@ function GuestBook() {
   const fetchData = async () => {
     const dataQuery = query(
       collection(db, 'guestBook'),
+      where('isDeleted', '==', false),
       orderBy('createdAt', 'desc'),
       limit(10)
     );
@@ -111,7 +114,7 @@ function GuestBook() {
       ]);
     }
     setIsFormModalOpen(false);
-    window.gtag?.('event', 'write_guest_book', { name });
+    trackEvent('write_guest_book', { name });
     toast.info('게시글이 작성되었어요!');
     return true;
   };

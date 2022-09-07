@@ -2,6 +2,7 @@ import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 
 import classnames from 'utils/classnames';
+import { trackEvent } from 'utils/gtag';
 
 interface IProps {
   images: {
@@ -42,7 +43,7 @@ const ImageViewer = ({
     (delta: number) => {
       let nextIndex = (currentIndex + delta) % images.length;
       if (nextIndex < 0) nextIndex = images.length - 1;
-      window.gtag?.('event', 'change_image', { image: images[nextIndex].name });
+      trackEvent('change_image', { image: images[nextIndex].name });
       setCurrentIndex(nextIndex);
     },
     [currentIndex, images]

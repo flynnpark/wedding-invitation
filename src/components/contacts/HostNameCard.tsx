@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Money from 'components/icons/Money';
 import Phone from 'components/icons/Phone';
+import { trackEvent } from 'utils/gtag';
 import AccountModal, { AccountInfo } from './AccountModal';
 
 interface HostNameCardProps {
@@ -20,7 +21,7 @@ function HostNameCard({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleModalOpen = () => {
-    window.gtag?.('event', 'click_account', { target: father });
+    trackEvent('click_account', { target: father });
     setIsModalOpen(true);
   };
   const handleModalClose = () => setIsModalOpen(false);
@@ -44,9 +45,7 @@ function HostNameCard({
         <a
           className="p-2 bg-stone-200 rounded-full"
           href={`tel:+82${phone}`}
-          onClick={() =>
-            window.gtag?.('event', 'click_phone', { target: father })
-          }
+          onClick={() => trackEvent('click_phone', { target: father })}
         >
           <Phone />
         </a>

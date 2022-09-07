@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
 import styled from 'styled-components';
@@ -40,6 +40,7 @@ function PostFormModal({
   onFormValid,
   post,
 }: WriteFormModalProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -48,10 +49,13 @@ function PostFormModal({
   } = useForm<GuestBookPostForm>();
 
   const onValid = async (data: GuestBookPostForm) => {
+    if (isLoading) return;
+    setIsLoading(true);
     const isSuccess = await onFormValid(data);
     if (isSuccess) {
       reset();
     }
+    setIsLoading(false);
   };
 
   const getSubmitButtonText = () => {
@@ -185,7 +189,7 @@ function PostFormModal({
             type="submit"
             className="flex bg-stone-600  py-2 rounded-md justify-center text-sm w-24 text-white"
           >
-            {getSubmitButtonText()}
+            {isLoading ? '…' : getSubmitButtonText()}
           </button>
           <button
             className="flex bg-stone-300  py-2 rounded-md justify-center text-sm w-24"

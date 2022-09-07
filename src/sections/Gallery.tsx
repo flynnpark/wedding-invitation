@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 
 import ImageViewer from 'components/ImageViewer';
 import Section from 'components/Section';
+import { trackEvent } from 'utils/gtag';
 
 interface QueryResult {
   allFile: {
@@ -44,7 +45,7 @@ function Gallery() {
 
   const openImageViewer = useCallback(
     (index: number) => {
-      window.gtag?.('event', 'click_gallery', {
+      trackEvent('click_gallery', {
         image: data.allFile.edges[index].node.name,
       });
       setCurrentImage(index);
