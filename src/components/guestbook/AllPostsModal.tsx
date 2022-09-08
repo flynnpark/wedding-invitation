@@ -1,19 +1,13 @@
 import bcrypt from 'bcryptjs';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import { usePostsDispatch } from 'contexts/PostsContext';
+import useFetchPosts from 'hooks/useFetchPosts';
+import useIntersect from 'hooks/useIntersect';
 import { Post } from 'sections/GuestBook';
 import { db } from 'utils/firebase';
 import { trackEvent } from 'utils/gtag';
@@ -30,6 +24,10 @@ const PostCardsContainer = styled.div`
   }
 `;
 
+const Target = styled.div`
+  height: 1px;
+`;
+
 interface PostWithPassword extends Post {
   password: string;
 }
@@ -40,31 +38,15 @@ interface AllPostsModalProps {
 }
 
 function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
-  const [posts, setPosts] = useState<Post[]>([]);
   const [targetPost, setTargetPost] = useState<Post | undefined>(undefined);
   const [formType, setFormType] = useState<FormType>('edit');
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    const dataQuery = query(
-      collection(db, 'guestBook'),
-      where('isDeleted', '==', false),
-      orderBy('createdAt', 'desc')
-    );
-    const querySnapshot = await getDocs(dataQuery);
-    setPosts(
-      querySnapshot.docs.map((doc) => {
-        const { name, password, content, createdAt } = doc.data();
-        return {
-          id: doc.id,
-          name,
-          password,
-          content,
-          createdAt: createdAt.toDate(),
-        };
-      })
-    );
-  };
+  const { posts, fetchPosts } = useFetchPosts();
+  const dispatch = usePostsDispatch();
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    fetchPosts();
+  });
 
   const handleOpenEditForm = (post: Post) => {
     trackEvent('open_guestbook_edit_form');
@@ -100,9 +82,9 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     }
 
     await updateDoc(docRef, { name, content });
+    dispatch({ type: 'UPDATE', id, values: { name, content } });
     toast.info('게시글이 수정되었어요!');
     setIsFormModalOpen(false);
-    fetchData();
     trackEvent('edit_guest_book', { name: post.name });
     return true;
   };
@@ -127,9 +109,9 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
     }
 
     await updateDoc(docRef, { isDeleted: true });
+    dispatch({ type: 'DELETE', id });
     toast.info('게시글이 삭제되었어요!');
     setIsFormModalOpen(false);
-    fetchData();
     trackEvent('delete_guest_book', { name: post.name });
     return true;
   };
@@ -140,7 +122,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
       className="bg-white rounded-2xl flex flex-col py-4 px-2 w-80 text-center max-h-full"
       overlayClassName="fixed top-0 left-0 right-0 bottom-0 bg-black/[.40] items-center justify-center flex h-full py-8"
       onAfterOpen={() => {
-        fetchData();
+        fetchPosts();
       }}
     >
       <div className="text-center">
@@ -163,6 +145,7 @@ function AllPostsModal({ isOpen, handleClose }: AllPostsModalProps) {
               handleOpenDeleteForm={handleOpenDeleteForm}
             />
           ))}
+          <Target ref={ref} />
         </PostCardsContainer>
       )}
       <div className="flex flex-row justify-center mt-4">

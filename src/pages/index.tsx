@@ -4,6 +4,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
 import Root from 'components/Root';
+import { PostsContextProvider } from 'contexts/PostsContext';
 import Contacts from 'sections/Contacts';
 import Copyright from 'sections/Copyright';
 import Gallery from 'sections/Gallery';
@@ -47,7 +48,7 @@ function IndexPage() {
   }, []);
 
   return (
-    <>
+    <PostsContextProvider>
       <Root>
         <Home />
         <Greeting />
@@ -66,7 +67,7 @@ function IndexPage() {
         pauseOnHover={true}
         draggable={true}
       />
-    </>
+    </PostsContextProvider>
   );
 }
 

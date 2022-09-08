@@ -55,8 +55,8 @@ function AllContentsPostCard({
         </div>
       </div>
       <div className="mt-2">
-        {content.split('\\n').map((text) => (
-          <Fragment key={text}>
+        {content.split('\\n').map((text, index) => (
+          <Fragment key={index}>
             {text}
             <br />
           </Fragment>

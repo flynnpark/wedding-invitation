@@ -1,15 +1,5 @@
 import bcrypt from 'bcryptjs';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -20,6 +10,8 @@ import PostFormModal, {
 } from 'components/guestbook/PostFormModal';
 import SimplePostCard from 'components/guestbook/SimplePostCard';
 import Section from 'components/Section';
+import { usePostsDispatch } from 'contexts/PostsContext';
+import useFetchPosts from 'hooks/useFetchPosts';
 import { db } from 'utils/firebase';
 import { trackEvent } from 'utils/gtag';
 
@@ -43,14 +35,14 @@ export interface Post {
 function GuestBook() {
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
   const [isPostsModalOpen, setIsPostsModalOpen] = useState<boolean>(false);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const { posts, fetchFirstPage } = useFetchPosts();
+  const dispatch = usePostsDispatch();
 
   const handleFormModalOpen = () => {
     trackEvent('open_guestbook_form');
     setIsFormModalOpen(true);
   };
   const handleFormModalClose = () => {
-    fetchData();
     setIsFormModalOpen(false);
   };
 
@@ -59,34 +51,12 @@ function GuestBook() {
     setIsPostsModalOpen(true);
   };
   const handleAllPostsModalClose = () => {
-    fetchData();
     setIsPostsModalOpen(false);
   };
 
-  const fetchData = async () => {
-    const dataQuery = query(
-      collection(db, 'guestBook'),
-      where('isDeleted', '==', false),
-      orderBy('createdAt', 'desc'),
-      limit(10)
-    );
-    const querySnapshot = await getDocs(dataQuery);
-    setPosts(
-      querySnapshot.docs.map((doc) => {
-        const { name, content, createdAt } = doc.data();
-        return {
-          id: doc.id,
-          name,
-          content,
-          createdAt: createdAt.toDate(),
-        };
-      })
-    );
-  };
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchFirstPage();
+  }, [fetchFirstPage]);
 
   const onFormValid = async (data: GuestBookPostForm) => {
     const { name, password, content } = data;
@@ -101,18 +71,7 @@ function GuestBook() {
       createdAt,
     });
     const newDocument = await getDoc(doc(db, 'guestBook', docRef.id));
-    const newPost = newDocument.data();
-    if (newPost) {
-      setPosts([
-        {
-          id: newPost.id,
-          content: newPost.content,
-          name: newPost.name,
-          createdAt: newPost.createdAt.toDate(),
-        },
-        ...posts,
-      ]);
-    }
+    dispatch({ type: 'ADD_ITEM_FIRST', post: newDocument });
     setIsFormModalOpen(false);
     trackEvent('write_guest_book', { name });
     toast.info('게시글이 작성되었어요!');
@@ -131,9 +90,33 @@ function GuestBook() {
             </div>
           ) : (
             <PostsContainer className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative">
-              {posts.map((post) => (
+              {posts.slice(0, 10).map((post) => (
                 <SimplePostCard key={post.id} post={post} />
               ))}
+              <div className="flex flex-col rounded-xl w-44 max-w-xl  flex-none p-4 justify-center items-center">
+                <button
+                  className="flex flex-col items-center space-y-2"
+                  onClick={handleAllPostsModalOpen}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
+                    />
+                  </svg>
+                  <span className="text-sm font-sans font-bold">
+                    게시글 전체 보기
+                  </span>
+                </button>
+              </div>
             </PostsContainer>
           )}
           <div className="flex flex-row justify-end space-x-2 text-sm font-sans">
