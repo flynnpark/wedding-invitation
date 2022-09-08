@@ -93,6 +93,30 @@ function GuestBook() {
               {posts.slice(0, 10).map((post) => (
                 <SimplePostCard key={post.id} post={post} />
               ))}
+              <div className="flex flex-col rounded-xl w-44 max-w-xl  flex-none p-4 justify-center items-center">
+                <button
+                  className="flex flex-col items-center space-y-2"
+                  onClick={handleAllPostsModalOpen}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
+                    />
+                  </svg>
+                  <span className="text-sm font-sans font-bold">
+                    게시글 전체 보기
+                  </span>
+                </button>
+              </div>
             </PostsContainer>
           )}
           <div className="flex flex-row justify-end space-x-2 text-sm font-sans">
