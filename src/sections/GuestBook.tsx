@@ -1,15 +1,5 @@
 import bcrypt from 'bcryptjs';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -20,6 +10,8 @@ import PostFormModal, {
 } from 'components/guestbook/PostFormModal';
 import SimplePostCard from 'components/guestbook/SimplePostCard';
 import Section from 'components/Section';
+import { usePostsDispatch } from 'contexts/PostsContext';
+import useFetchPosts from 'hooks/useFetchPosts';
 import { db } from 'utils/firebase';
 import { trackEvent } from 'utils/gtag';
 
@@ -43,14 +35,14 @@ export interface Post {
 function GuestBook() {
   const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
   const [isPostsModalOpen, setIsPostsModalOpen] = useState<boolean>(false);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const { posts, fetchFirstPage } = useFetchPosts();
+  const dispatch = usePostsDispatch();
 
   const handleFormModalOpen = () => {
     trackEvent('open_guestbook_form');
     setIsFormModalOpen(true);
   };
   const handleFormModalClose = () => {
-    fetchData();
     setIsFormModalOpen(false);
   };
 
@@ -59,34 +51,12 @@ function GuestBook() {
     setIsPostsModalOpen(true);
   };
   const handleAllPostsModalClose = () => {
-    fetchData();
     setIsPostsModalOpen(false);
   };
 
-  const fetchData = async () => {
-    const dataQuery = query(
-      collection(db, 'guestBook'),
-      where('isDeleted', '==', false),
-      orderBy('createdAt', 'desc'),
-      limit(10)
-    );
-    const querySnapshot = await getDocs(dataQuery);
-    setPosts(
-      querySnapshot.docs.map((doc) => {
-        const { name, content, createdAt } = doc.data();
-        return {
-          id: doc.id,
-          name,
-          content,
-          createdAt: createdAt.toDate(),
-        };
-      })
-    );
-  };
-
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchFirstPage();
+  }, [fetchFirstPage]);
 
   const onFormValid = async (data: GuestBookPostForm) => {
     const { name, password, content } = data;
@@ -101,18 +71,7 @@ function GuestBook() {
       createdAt,
     });
     const newDocument = await getDoc(doc(db, 'guestBook', docRef.id));
-    const newPost = newDocument.data();
-    if (newPost) {
-      setPosts([
-        {
-          id: newPost.id,
-          content: newPost.content,
-          name: newPost.name,
-          createdAt: newPost.createdAt.toDate(),
-        },
-        ...posts,
-      ]);
-    }
+    dispatch({ type: 'ADD_ITEM_FIRST', post: newDocument });
     setIsFormModalOpen(false);
     trackEvent('write_guest_book', { name });
     toast.info('게시글이 작성되었어요!');
@@ -131,7 +90,7 @@ function GuestBook() {
             </div>
           ) : (
             <PostsContainer className="overflow-x-auto flex w-full space-x-3 h-64 py-4 relative">
-              {posts.map((post) => (
+              {posts.slice(0, 10).map((post) => (
                 <SimplePostCard key={post.id} post={post} />
               ))}
             </PostsContainer>
